@@ -13,11 +13,25 @@
     box-sizing: border-box;
 }
 
+@media (max-width: 897px) {
+    .contidio-entity {
+        width: 50%;
+    }
+}
+
+@media (max-width: 729px) {
+    .contidio-entity {
+        width: 100%;
+        height: auto !important;
+    }
+}
+
 .contidio-entity-inner {
     width: 100%;
     border: 1px solid #d3d6d9;
     text-align: left;
     position: relative;
+    height: 100%;
 }
 
 .contidio-entity-inner:hover {
@@ -51,6 +65,8 @@
     position: relative;
     overflow: hidden;
     max-height: 223px;
+    height: 0;
+    padding-bottom: 62.162162162162%;
 }
 
 .contidio-text-container {
@@ -67,6 +83,9 @@
 .contidio-entity-inner img {
     width: 100%;
     transition: all 0.5s ease-in-out;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .contidio-entity-inner:hover img {

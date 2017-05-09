@@ -17,9 +17,9 @@ fetch(url, {
   return response.json();
 }).then(function (json) {
 
-    var renderer = new Renderer($, json.entity, options);
+  var renderer = new Renderer($, json, options);
 
-    renderer.draw();
+  renderer.draw();
 
 });
 
