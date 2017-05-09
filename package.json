@@ -10,12 +10,14 @@
     "contidio",
     "javascript"
   ],
+  "scripts": {
+    "build": "browserify src/main.js -o dist/contidio-widget.js",
+    "watch": "watchify src/main.js -o dist/contidio-widget.js --debug --verbose"
+  },
   "dependencies": {
-
+    "domtastic": "^0.14.0"
   },
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "author": {
     "name": "Lukas Struber",
     "email": "ls@contidio.com",
