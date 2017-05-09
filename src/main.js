@@ -19,7 +19,7 @@ fetch(url, {
 
   var renderer = new Renderer($, json, options);
 
-  renderer.draw();
+  renderer.init();
 
 });
 

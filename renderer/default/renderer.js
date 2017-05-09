@@ -1,36 +1,49 @@
 function Renderer($, json, options){
 
     this.defaultOptions = {
-      container: ".contidio-widget"
+        container: ".contidio-widget",
+        itemClass: "contidio-entity"
     };
 
     this.options = options ? options : {};
 
     this.enitities = json.entity ? json.entity : json;
 
+    this.init = function(){
+
+        this.options = this.mergeOptions(this.defaultOptions, this.options);
+
+        this.draw();
+    };
+
     this.draw = function(){
 
-        var options = this.mergeOptions(this.defaultOptions, this.options);
+        var options = this.options;
 
-        $(options.container).innerHTML = "";
+        $(this.options.container).innerHTML = "";
 
         var $results = $("<div class='contidio-entities'></div>");
 
         this.enitities.forEach(function (entity) {
 
-            $entity = $("<div class='contidio-entity type-"+entity.type+"'></div>");
+            console.log(entity);
+
+            $entity = $("<div class='"+options.itemClass+" type-"+entity.type+"'></div>");
             $entity.data("uuid",entity.uuid);
 
             $entityInner = $("<div class='contidio-entity-inner'></div>");
 
-            $entityInner.append("<div class='contidio-image-container'><img class='contidio-entity-image' src='"+entity.previewBinarySet[0].calculatedBinary[0].downloadLink+"'/></div>");
+            if(entity.previewBinarySet[0].calculatedBinary[0].binaryType == 3){
+                $entityInner.append("<div class='contidio-image-container'><i class='icon-audio'>&#9836;</i></div>");
+            }else{
+                $entityInner.append("<div class='contidio-image-container'><img class='contidio-entity-image' src='"+entity.previewBinarySet[0].calculatedBinary[0].downloadLink+"'/></div>");
+
+            }
 
 
             $entityText = $("<div class='contidio-text-container'></div>");
 
             $entityText.append("<div class='contidio-entity-name'>"+(entity.name ? entity.name : entity.uuid)+"</div>");
-
-
 
             $entityInner.append($entityText);
 
@@ -48,7 +61,7 @@ function Renderer($, json, options){
     };
 
     this.resize = function(){
-        var $entries = $(".contidio-entity");
+        var $entries = $(this.options.container+" ."+this.options.itemClass);
 
         var itemsPerRow = this.getItemsPerRow();
         var height = 0;
