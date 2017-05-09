@@ -25,4 +25,4 @@ Start up the webserver:
 npm run example
 ```
 
-And go to http://127.0.0.1:8080/ to see a list of all examples
+And go to http://127.0.0.1:8080/example to see a list of all examples

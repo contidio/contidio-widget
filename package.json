@@ -13,10 +13,12 @@
   "scripts": {
     "build": "browserify src/main.js -o dist/contidio-widget.js",
     "watch": "watchify src/main.js -o dist/contidio-widget.js --debug --verbose",
-    "example": "http-server ./example"
+    "example": "http-server ./"
   },
   "dependencies": {
-    "domtastic": "^0.14.0"
+    "domtastic": "^0.14.0",
+    "promise-polyfill": "^6.0.2",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "browserify": "^14.3.0",
