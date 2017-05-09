@@ -5,7 +5,9 @@ if (!window.Promise) {
   window.Promise = Promise;
 }
 
-var url = 'https://mdidx-staging.contidio.com:31446/api/v1/brands/3000000A2/childs/anonymous/?flags=268435456&startIndex=0&count=24&orderBy=1&orderDirection=1&locale=de&types=1,2';
+var options = (typeof contidioOptions !== "undefined") ? contidioOptions : {};
+
+var url = options.url ? options.url : '';
 
 fetch(url, {
   headers: {
@@ -15,9 +17,9 @@ fetch(url, {
   return response.json();
 }).then(function (json) {
 
-  json.entity.forEach(function (entity) {
-    $('.contidio-widget').append('<p>'+entity.uuid+'</p>');
-  });
+    var renderer = new Renderer($, json.entity, options);
+
+    renderer.draw();
 
 });
 

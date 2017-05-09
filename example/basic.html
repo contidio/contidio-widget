@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Contidio Widget Basic Example</title>
+    <link href="../renderer/default/styles.css" rel="stylesheet" />
 </head>
 <body>
 
     <h1>Basic Example</h1>
 
-    <div class="contidio-widget"></div>
+    <div id="widget"></div>
 
+    <script>
 
+        var contidioOptions = {
+            url: "https://mdidx-staging.contidio.com:31446/api/v1/brands/3000000A2/childs/anonymous/?flags=268435456&startIndex=0&count=24&orderBy=1&orderDirection=1&locale=de&types=1,2",
+            container: "#widget"
+        }
+
+    </script>
+    <script src="../renderer/default/renderer.js"></script>
     <script src="../dist/contidio-widget.js"></script>
 </body>
 </html>

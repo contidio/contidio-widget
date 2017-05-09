@@ -1,0 +1,76 @@
+.contidio-entities {
+    position: relative;
+    font-family: OpenSans, Arial, sans-serif;
+    width: 100%;
+    max-width: 1170px;
+    margin: 0 auto;
+}
+
+.contidio-entity {
+    float: left;
+    width: 33.33%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.contidio-entity-inner {
+    width: 100%;
+    border: 1px solid #d3d6d9;
+    text-align: left;
+    position: relative;
+}
+
+.contidio-entity-inner:hover {
+    background-color: #f4f4f4;
+    cursor: pointer;
+}
+
+.contidio-entity-inner:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    background: #0cafd3;
+    height: 4px;
+    -webkit-transition-property: left, right;
+    transition-property: left, right;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+
+.contidio-entity-inner:hover:before{
+    left: 0;
+    right: 0;
+}
+
+.contidio-image-container {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    max-height: 223px;
+}
+
+.contidio-text-container {
+    padding: 30px;
+}
+
+.contidio-entity-name {
+    text-align: left;
+    color: #081c2d;
+    font-size: 129%;
+    font-weight: 400;
+}
+
+.contidio-entity-inner img {
+    width: 100%;
+    transition: all 0.5s ease-in-out;
+}
+
+.contidio-entity-inner:hover img {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}

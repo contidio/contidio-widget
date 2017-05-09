@@ -10,7 +10,7 @@ npm install
 
 To build the widget:
 ```
-npm build
+npm run build
 ```
 
 To watch for changes:
