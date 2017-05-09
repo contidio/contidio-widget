@@ -1,0 +1,25 @@
+{
+  "name": "contidio-widget",
+  "version": "0.0.1",
+  "description": "Include a single or multiple Contidio Assets or Overviews into your existing website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/contidio/contidio-widget.git"
+  },
+  "keywords": [
+    "contidio",
+    "javascript"
+  ],
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  },
+  "author": {
+    "name": "Lukas Struber",
+    "email": "ls@contidio.com",
+    "url": "https://www.contidio.com"
+  },
+  "license": "MIT"
+}
