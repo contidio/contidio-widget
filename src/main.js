@@ -54,13 +54,20 @@ function ContidioWidget() {
 
       var renderer = new Renderer(options, $);
 
-      var $itemList = $("<div class='contidio-item-list'></div>");
 
-      for (var i = 0; i < that.items.length; i++) {
-        $itemList.append(renderer.renderListView(that.items[i]));
+      if(json.entity){
+
+        var $itemList = $("<div class='contidio-item-list'></div>");
+
+        for (var i = 0; i < that.items.length; i++) {
+          $itemList.append(renderer.renderListView(that.items[i]));
+        }
+
+        $(options.container).append($itemList);
+
+      } else {
+        $(options.container).append(renderer.renderDetailView(that.items[0]));
       }
-
-      $(options.container).append($itemList);
 
       if (renderer.resize) {
 
@@ -78,21 +85,27 @@ function ContidioWidget() {
 
     var that = this;
 
-    json.entity.forEach(function (entity) {
+    if(json.entity){
+      json.entity.forEach(function (entity) {
 
-      var item = {
-        uuid: entity.uuid,
-        name: entity.name ? entity.name : entity.uuid,
-        type: that.defineType(entity.type),
-        previewImage: that.getPreviewImage(entity)
-      };
+        var item = {
+          uuid: entity.uuid,
+          name: entity.name ? entity.name : entity.uuid,
+          type: that.defineType(entity.type),
+          previewImage: that.getPreviewImage(entity)
+        };
 
-      if (entity.workingSetBinaryType) {
-        item.binaryType = that.defineBinaryType(entity.workingSetBinaryType);
-      }
+        if (entity.workingSetBinaryType) {
+          item.binaryType = that.defineBinaryType(entity.workingSetBinaryType);
+        }
 
-      that.items.push(item);
-    });
+        that.items.push(item);
+      });
+    }else{
+      that.items.push(json);
+    }
+
+
   };
 
   this.defineType = function (type) {

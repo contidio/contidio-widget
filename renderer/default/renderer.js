@@ -55,6 +55,9 @@ function Renderer(options, $) {
    */
   this.renderDetailView = function (item) {
 
+    
+
+    return $("<div class='contidio-detail-view'></div>");
   };
 
   /**
