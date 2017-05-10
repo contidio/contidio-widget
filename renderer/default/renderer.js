@@ -17,12 +17,14 @@ function Renderer($, options){
 
         $imageContainer = $("<div class='contidio-image-container'></div>");
 
-        if(item.binaryType == "audio"){
-            $imageContainer.append("<i class='contidio-icon contidio-icon-audio'>&#9836;</i>");
-        }else if(item.workingSetBinaryType == "video"){
-            $imageContainer.append("<i class='contidio-icon contidio-icon-video'>&#9655;</i>");
+        if(item.binaryType) {
+            if(item.binaryType == "audio"){
+                $imageContainer.append("<i class='contidio-icon contidio-icon-audio'>&#9836;</i>");
+            }else if(item.binaryType == "video"){
+                $imageContainer.append("<i class='contidio-icon contidio-icon-video'>&#9655;</i>");
+            }
         }
-
+        
         if(item.previewImage){
             $imageContainer.append("<img class='contidio-item-image' src='"+item.previewImage+"'/>");
         }
