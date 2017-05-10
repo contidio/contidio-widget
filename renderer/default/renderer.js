@@ -1,66 +1,52 @@
-function Renderer($, json, options){
-
-    this.defaultOptions = {
-        container: ".contidio-widget",
-        itemClass: "contidio-entity"
-    };
+function Renderer($, options){
 
     this.options = options ? options : {};
 
-    this.enitities = json.entity ? json.entity : json;
-
     this.init = function(){
-
-        this.options = this.mergeOptions(this.defaultOptions, this.options);
-
         this.draw();
     };
 
-    this.draw = function(){
+    this.renderListItem = function(item) {
 
         var options = this.options;
 
-        $(this.options.container).innerHTML = "";
+        $item = $("<div class='"+options.itemClass+" "+item.type+"'></div>");
+        $item.data("uuid",item.uuid);
 
-        var $results = $("<div class='contidio-entities'></div>");
+        $itemInner = $("<div class='contidio-item-inner'></div>");
 
-        this.enitities.forEach(function (entity) {
+        $imageContainer = $("<div class='contidio-image-container'></div>");
 
-            console.log(entity);
+        if(item.binaryType == "audio"){
+            $imageContainer.append("<i class='contidio-icon contidio-icon-audio'>&#9836;</i>");
+        }else if(item.workingSetBinaryType == "video"){
+            $imageContainer.append("<i class='contidio-icon contidio-icon-video'>&#9655;</i>");
+        }
 
-            $entity = $("<div class='"+options.itemClass+" type-"+entity.type+"'></div>");
-            $entity.data("uuid",entity.uuid);
+        if(item.previewImage){
+            $imageContainer.append("<img class='contidio-item-image' src='"+item.previewImage+"'/>");
+        }
 
-            $entityInner = $("<div class='contidio-entity-inner'></div>");
+        $itemInner.append($imageContainer);
 
-            if(entity.previewBinarySet[0].calculatedBinary[0].binaryType == 3){
-                $entityInner.append("<div class='contidio-image-container'><i class='icon-audio'>&#9836;</i></div>");
-            }else{
-                $entityInner.append("<div class='contidio-image-container'><img class='contidio-entity-image' src='"+entity.previewBinarySet[0].calculatedBinary[0].downloadLink+"'/></div>");
+        $itemText = $("<div class='contidio-text-container'></div>");
 
-            }
+        $itemText.append("<div class='contidio-item-name'>"+item.name+"</div>");
 
+        $itemInner.append($itemText);
 
-            $entityText = $("<div class='contidio-text-container'></div>");
+        $item.append($itemInner);
 
-            $entityText.append("<div class='contidio-entity-name'>"+(entity.name ? entity.name : entity.uuid)+"</div>");
+        return($item);
 
-            $entityInner.append($entityText);
+    };
 
-
-            $entity.append($entityInner);
-            $results.append($entity);
-        });
-
-        $(options.container).append($results);
-
-        this.resize();
-
-        this.addEvent(window, "resize", this.resize.bind(this));
+    this.renderDetail = function(item) {
 
     };
 
     this.resize = function(){
+
         var $entries = $(this.options.container+" ."+this.options.itemClass);
 
         var itemsPerRow = this.getItemsPerRow();
@@ -86,26 +72,8 @@ function Renderer($, json, options){
         });
     };
 
-    this.addEvent = function(object, type, callback) {
-        if (object == null || typeof(object) == 'undefined') return;
-        if (object.addEventListener) {
-            object.addEventListener(type, callback, false);
-        } else if (object.attachEvent) {
-            object.attachEvent("on" + type, callback);
-        } else {
-            object["on"+type] = callback;
-        }
-    };
-
     this.getItemsPerRow = function(){
         return window.outerWidth > 897 ? 3 : window.outerWidth > 729 ? 2 : 1;
-    };
-
-    this.mergeOptions = function(obj1,obj2){
-        var obj3 = {};
-        for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
-        for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
-        return obj3;
     };
 
 }

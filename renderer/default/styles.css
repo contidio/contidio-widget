@@ -1,4 +1,4 @@
-.contidio-entities {
+.contidio-item-list {
     position: relative;
     font-family: OpenSans, Arial, sans-serif;
     width: 100%;
@@ -6,7 +6,7 @@
     margin: 0 auto;
 }
 
-.contidio-entity {
+.contidio-item {
     float: left;
     width: 33.33%;
     padding: 15px;
@@ -14,8 +14,8 @@
     position: relative;
 }
 
-.contidio-entity.type-1:before,
-.contidio-entity.type-1:after{
+.contidio-item.collection:before,
+.contidio-item.collection:after{
     position: absolute;
     width: calc(100% - 30px);
     height: calc(100% - 30px);
@@ -25,14 +25,14 @@
     content: "";
 }
 
-.contidio-entity.type-1:before {
+.contidio-item.collection:before {
     z-index: 8;
     left: 20px;
     top: 10px;
     opacity: 0.9;
 }
 
-.contidio-entity.type-1:after {
+.contidio-item.collection:after {
     z-index: 5;
     left: 25px;
     top: 5px;
@@ -40,19 +40,19 @@
 }
 
 @media (max-width: 897px) {
-    .contidio-entity {
+    .contidio-item {
         width: 50%;
     }
 }
 
 @media (max-width: 729px) {
-    .contidio-entity {
+    .contidio-item {
         width: 100%;
         height: auto !important;
     }
 }
 
-.contidio-entity-inner {
+.contidio-item-inner {
     width: 100%;
     border: 1px solid #d3d6d9;
     background-color: #fff;
@@ -62,12 +62,12 @@
     z-index: 10;
 }
 
-.contidio-entity-inner:hover {
+.contidio-item-inner:hover {
     background-color: #f4f4f4;
     cursor: pointer;
 }
 
-.contidio-entity-inner:before {
+.contidio-item-inner:before {
     content: "";
     position: absolute;
     left: 50%;
@@ -83,7 +83,7 @@
     transition-timing-function: ease-out;
 }
 
-.contidio-entity-inner:hover:before{
+.contidio-item-inner:hover:before{
     left: 0;
     right: 0;
 }
@@ -98,10 +98,10 @@
     background-color: #081c2d;
 }
 
-.icon-audio {
+.contidio-icon {
     color: #fff;
     font-style: normal;
-    font-size: 75px;
+    font-size: 55px;
     position: absolute;
     display: block;
     width: 75px;
@@ -111,28 +111,51 @@
     margin-top: -38px;
     left: 50%;
     margin-left: -38px;
+    z-index: 5;
+    opacity: 0.8;
+    text-align: center;
+}
+
+.contidio-icon-video {
+    text-indent: 9px;
+    font-size: 50px;
+}
+
+.contidio-icon:after {
+    display: block;
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
+    border: 3px solid #fff;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    content: "";
 }
 
 .contidio-text-container {
     padding: 30px;
 }
 
-.contidio-entity-name {
+.contidio-item-name {
     text-align: left;
     color: #081c2d;
     font-size: 129%;
     font-weight: 400;
 }
 
-.contidio-entity-inner img {
+.contidio-item-inner img {
     width: 100%;
+    min-height: 100%;
     transition: all 0.5s ease-in-out;
     position: absolute;
     left: 0;
     top: 0;
 }
 
-.contidio-entity-inner:hover img {
+.contidio-item-inner:hover img {
     -webkit-transform: scale(1.2);
     -ms-transform: scale(1.2);
     transform: scale(1.2);
