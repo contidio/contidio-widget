@@ -4,24 +4,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contidio Widget Basic Example</title>
-
 </head>
 <body>
 
     <h1>Basic Example</h1>
 
+    <!-- BEGIN: Contidio widget container -->
     <div class="contidio-widget"></div>
+    <!-- END: Contidio widget container -->
 
+    <!-- BEGIN: Contidio renderer (customize if needed) -->
+    <link href="../renderer/default/styles.css" rel="stylesheet"/>
+    <script src="../renderer/default/renderer.js"></script>
+    <!-- END: Contidio renderer -->
+
+    <!-- BEGIN: Conditio widget snippet -->
     <script>
-
         var contidioOptions = {
             url: "https://mdidx-staging.contidio.com:31446/api/v1/brands/3000000A1/childs/anonymous/?flags=268435456&startIndex=0&count=24&orderBy=1&orderDirection=1&locale=de&types=1,2"
         }
-
     </script>
+    <script src="../dist/contidio-widget.js" async defer></script>
+    <!-- END: Contidio widget snippet -->
 
-    <link href="../renderer/default/styles.css" rel="stylesheet" />
-    <script src="../renderer/default/renderer.js"></script>
-    <script src="../dist/contidio-widget.js"></script>
 </body>
 </html>
