@@ -15,6 +15,8 @@ function Renderer(options, $) {
 
     var options = this.options;
 
+    console.log(options);
+
     $item = $("<div class='" + options.itemClass + " " + item.type + "'></div>");
     $item.data("uuid", item.uuid);
 
@@ -55,9 +57,55 @@ function Renderer(options, $) {
    */
   this.renderDetailView = function (item) {
 
-    
+    console.log(item);
 
-    return $("<div class='contidio-detail-view'></div>");
+    $detailView = $("<div class='contidio-detail-view'></div>");
+
+    $assetPreview = $("<div class='contidio-asset-preview'></div>");
+
+    if (item.binaryType) {
+
+      if (item.binaryType == "image") {
+        $assetPreview.append("<div class='contidio-image-wrapper'><img src='"+item.previewImage+"' /></div>");
+      } else if (item.binaryType == "audio") {
+        $assetPreview.append("<div class='contidio-audio-wrapper'><img src='"+item.previewImage+"' /><audio controls><source src='"+item.audioSrc+"' type='audio/mp4'/></audio></div>");
+      } else if (item.binaryType == "video") {
+        $assetPreview.append("<div class='contidio-video-wrapper'><video controls poster='"+item.previewImage+"'><source src='"+item.videoSrc+"' type='video/mp4'/></video></div>");
+      } else if (item.binaryType == "document") {
+        $assetPreview.append("<div class='contidio-document-wrapper'><img src='"+item.previewImage+"' /></div>");
+      }
+
+    }
+
+    $assetData = $("<div class='contidio-asset-data'></div>");
+
+    $assetData.append("<div class='contidio-asset-name'>"+item.name+"</div>");
+
+    if(item.description){
+      $assetData.append("<div class='contidio-asset-description'>"+item.description+"</div>");
+    }
+    if(item.editorial){
+      $assetData.append("<div class='contidio-asset-editorial'>"+item.editorial+"</div>");
+    }
+
+    if(item.tags){
+      $tags = $("<ul class='contidio-asset-tags'></ul>");
+
+      for(t = 0; t < item.tags.length; t++) {
+        $tags.append("<li class='contidio-asset-tag'>"+item.tags[t].text+"</li>");
+      }
+
+      $assetData.append($tags);
+    }
+
+    if(item.author){
+      $assetData.append("<div class='contidio-asset-author'>"+item.author+"</div>");
+    }
+
+    $detailView.append($assetPreview);
+    $detailView.append($assetData);
+
+    return $detailView;
   };
 
   /**

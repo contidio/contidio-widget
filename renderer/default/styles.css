@@ -1,4 +1,5 @@
-.contidio-item-list {
+.contidio-item-list,
+.contidio-detail-view {
     position: relative;
     font-family: OpenSans, Arial, sans-serif;
     width: 100%;
@@ -159,4 +160,115 @@
     -webkit-transform: scale(1.2);
     -ms-transform: scale(1.2);
     transform: scale(1.2);
+}
+
+/** Detail View **/
+
+.contidio-asset-preview {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contidio-asset-preview img {
+    max-width: 100%;
+}
+
+.contidio-asset-preview video::-internal-media-controls-download-button {
+    display:none;
+}
+
+.contidio-asset-preview video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+}
+
+.contidio-asset-preview video::-webkit-media-controls-panel {
+    width: calc(100% + 35px);
+}
+
+.contidio-asset-preview audio::-internal-media-controls-download-button {
+    display:none;
+}
+
+.contidio-asset-preview audio::-webkit-media-controls-enclosure {
+    overflow:hidden;
+}
+
+.contidio-asset-preview audio::-webkit-media-controls-panel {
+    width: calc(100% + 35px);
+}
+
+.contidio-asset-name {
+    font-size: 32pt;
+    line-height: 36pt;
+    font-weight: 300;
+    margin: 0;
+}
+
+.contidio-asset-description {
+    font-size: 24pt;
+    font-weight: 300;
+    line-height: 30pt;
+    text-align: left;
+    margin: 0;
+}
+
+.contidio-asset-tags {
+    padding: 0;
+    margin: 20px 0 10px;
+}
+
+.contidio-asset-tags:after {
+    display: block;
+    clear: both;
+    content: "";
+    position: relative;
+}
+
+.contidio-asset-tags .contidio-asset-tag {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 10px;
+    background-color: #4d4e4e;
+    color: #fff;
+    border-radius: 5px;
+    cursor: default;
+}
+
+.contidio-audio-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.contidio-audio-wrapper audio {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+    .contidio-asset-name {
+        font-size: 24pt;
+        line-height: 28pt;
+    }
+    .contidio-asset-description {
+        font-size: 18pt;
+        line-height: 22pt;
+    }
+}
+
+@media (max-width: 480px) {
+    .contidio-asset-name {
+        font-size: 20pt;
+        line-height: 24pt;
+    }
+    .contidio-asset-description {
+        font-size: 14pt;
+        line-height: 16pt;
+    }
 }

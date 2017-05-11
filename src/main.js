@@ -27,7 +27,7 @@ function ContidioWidget() {
 
     if (typeof jQuery === 'undefined') {
       $ = require('domtastic');
-    }else {
+    } else {
       $ = jQuery;
     }
 
@@ -37,10 +37,17 @@ function ContidioWidget() {
       window.Promise = Promise;
     }
 
-    var options = this.options;
-    var that = this;
+    var url = this.options.url ? this.options.url : '';
 
-    var url = options.url ? options.url : '';
+    this.fetchUrl(url, $);
+
+  };
+
+  this.fetchUrl = function (url, $) {
+
+    var options = this.options;
+    var renderer = new Renderer(options, $);
+    var that = this;
 
     fetch(url, {
       headers: {
@@ -50,12 +57,9 @@ function ContidioWidget() {
       return response.json();
     }).then(function (json) {
 
-      that.extractItems(json);
+      if (json.entity) {
 
-      var renderer = new Renderer(options, $);
-
-
-      if(json.entity){
+        that.extractItems(json);
 
         var $itemList = $("<div class='contidio-item-list'></div>");
 
@@ -66,6 +70,9 @@ function ContidioWidget() {
         $(options.container).append($itemList);
 
       } else {
+
+        that.extractItems(json);
+
         $(options.container).append(renderer.renderDetailView(that.items[0]));
       }
 
@@ -85,27 +92,70 @@ function ContidioWidget() {
 
     var that = this;
 
-    if(json.entity){
+    if (json.entity) {
       json.entity.forEach(function (entity) {
-
-        var item = {
-          uuid: entity.uuid,
-          name: entity.name ? entity.name : entity.uuid,
-          type: that.defineType(entity.type),
-          previewImage: that.getPreviewImage(entity)
-        };
-
-        if (entity.workingSetBinaryType) {
-          item.binaryType = that.defineBinaryType(entity.workingSetBinaryType);
-        }
-
-        that.items.push(item);
+        that.items.push(that.getItemData(entity, false));
       });
-    }else{
-      that.items.push(json);
+    } else {
+      that.items.push(that.getItemData(json, true));
     }
 
+  };
 
+  this.getItemData = function (entity, isDetail) {
+    var item = {
+      uuid: entity.uuid,
+      name: entity.name ? entity.name : entity.uuid,
+      description: entity.description || false,
+      editorial: entity.editorial || false,
+      type: this.defineType(entity.type)
+    };
+
+    if (entity.workingSetBinaryType) {
+      item.binaryType = this.defineBinaryType(entity.workingSetBinaryType);
+    }
+
+    if (entity.resolvedInheritedData && entity.resolvedInheritedData.tags && entity.resolvedInheritedData.tags.tag && entity.resolvedInheritedData.tags.tag.length) {
+      item.tags = entity.resolvedInheritedData.tags.tag;
+    }
+
+    if (entity.previewBinarySet && entity.previewBinarySet[0].author) {
+      item.author = entity.previewBinarySet[0].author;
+    }
+
+    var width = isDetail ? 875 : 350;
+    var previewBinaryPurpose = item.type == "collection" ? 1200 : item.binaryType == "document" ? 19002 : 19000;
+
+    if (isDetail) {
+      previewBinaryPurpose = item.type == "collection" ? 1200 : 19001;
+
+      if (item.binaryType) {
+        switch (item.binaryType) {
+          case "image":
+            previewBinaryPurpose = 19001;
+            break;
+          case "audio":
+            previewBinaryPurpose = 19006;
+            item.audioSrc = this.getBinarySrc(entity, 19005, -1);
+            break;
+          case "video":
+            previewBinaryPurpose = 19004;
+            item.videoSrc = this.getBinarySrc(entity, 19005, width);
+            break;
+          case "document":
+            previewBinaryPurpose = 19002;
+            item.pdfSrc = this.getBinarySrc(entity, 10001, -2);
+            width = 700;
+            break;
+
+        }
+      }
+
+    }
+
+    item.previewImage = this.getBinarySrc(entity, previewBinaryPurpose, width);
+
+    return item;
   };
 
   this.defineType = function (type) {
@@ -142,24 +192,18 @@ function ContidioWidget() {
 
   };
 
-  this.getPreviewImage = function (entity) {
+  this.getBinarySrc = function (entity, binaryPurpose, width) {
     var indexToUse = -1;
 
-    if (entity.workingSetBinaryType == 2) {
+    var bP = binaryPurpose ? binaryPurpose : 19000;
+    var w = width ? width : 560;
 
-      if (entity.previewBinarySet[0].calculatedBinary.length > 1) {
-
-        for (var i = 0; i < entity.previewBinarySet[0].calculatedBinary.length; i++) {
-          if (entity.previewBinarySet[0].calculatedBinary[i].binaryPurpose == 19000 &&
-            entity.previewBinarySet[0].calculatedBinary[i].width >= 560
-          ) {
-            indexToUse = i;
-          }
-        }
+    for (var i = 0; i < entity.previewBinarySet[0].calculatedBinary.length; i++) {
+      if (entity.previewBinarySet[0].calculatedBinary[i].binaryPurpose === bP &&
+        entity.previewBinarySet[0].calculatedBinary[i].outputId >= w
+      ) {
+        indexToUse = i;
       }
-
-    } else {
-      indexToUse = 0;
     }
 
     if (indexToUse > -1) {
