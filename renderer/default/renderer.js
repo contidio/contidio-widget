@@ -15,9 +15,7 @@ function Renderer(options, $) {
 
     var options = this.options;
 
-    console.log(options);
-
-    $item = $("<div class='" + options.itemClass + " " + item.type + "'></div>");
+    $item = $("<a target='_blank' href='"+item.url+"' class='" + options.itemClass + " " + item.type + "'></a>");
     $item.data("uuid", item.uuid);
 
     $itemInner = $("<div class='contidio-item-inner'></div>");
@@ -33,7 +31,7 @@ function Renderer(options, $) {
     }
 
     if (item.previewImage) {
-      $imageContainer.append("<img class='contidio-item-image' src='" + item.previewImage + "'/>");
+      $imageContainer.append("<img class='contidio-item-image' alt='"+item.name+"' src='" + item.previewImage + "'/>");
     }
 
     $itemInner.append($imageContainer);
@@ -56,8 +54,6 @@ function Renderer(options, $) {
    * @returns {*|jQuery|HTMLElement|string}
    */
   this.renderDetailView = function (item) {
-
-    console.log(item);
 
     $detailView = $("<div class='contidio-detail-view'></div>");
 

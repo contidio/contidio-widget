@@ -108,11 +108,12 @@ function ContidioWidget() {
       name: entity.name ? entity.name : entity.uuid,
       description: entity.description || false,
       editorial: entity.editorial || false,
-      type: this.defineType(entity.type)
+      type: this.getType(entity.type),
+      url: "https://www.contidio.com/"+this.getType(entity.type)+"/"+entity.uuid
     };
 
     if (entity.workingSetBinaryType) {
-      item.binaryType = this.defineBinaryType(entity.workingSetBinaryType);
+      item.binaryType = this.getBinaryType(entity.workingSetBinaryType);
     }
 
     if (entity.resolvedInheritedData && entity.resolvedInheritedData.tags && entity.resolvedInheritedData.tags.tag && entity.resolvedInheritedData.tags.tag.length) {
@@ -124,10 +125,10 @@ function ContidioWidget() {
     }
 
     var width = isDetail ? 875 : 350;
-    var previewBinaryPurpose = item.type == "collection" ? 1200 : item.binaryType == "document" ? 19002 : 19000;
+    var previewBinaryPurpose = 19000;
 
     if (isDetail) {
-      previewBinaryPurpose = item.type == "collection" ? 1200 : 19001;
+      previewBinaryPurpose = item.type == "folder" ? 1200 : 19001;
 
       if (item.binaryType) {
         switch (item.binaryType) {
@@ -150,7 +151,28 @@ function ContidioWidget() {
 
         }
       }
+    } else {
+      previewBinaryPurpose = item.type == "folder" ? 1200 : 19000;
 
+      switch (item.type) {
+        case "brand":
+          previewBinaryPurpose = 100;
+          break;
+        case "folder":
+          previewBinaryPurpose = 1200;
+          break;
+      }
+
+      if (item.binaryType) {
+        switch (item.binaryType) {
+          case "video":
+            previewBinaryPurpose = 19002;
+            break;
+          case "document":
+            previewBinaryPurpose = (entity.asset && entity.asset.type === 2) ? 19000 : 19002;
+            break;
+        }
+      }
     }
 
     item.previewImage = this.getBinarySrc(entity, previewBinaryPurpose, width);
@@ -158,13 +180,15 @@ function ContidioWidget() {
     return item;
   };
 
-  this.defineType = function (type) {
+  this.getType = function (type) {
 
     /* TODO: switch to constants */
 
     switch (type) {
+      case 0:
+        return "brand";
       case 1:
-        return "collection";
+        return "folder";
       case 2:
         return "asset";
       default:
@@ -173,7 +197,7 @@ function ContidioWidget() {
 
   };
 
-  this.defineBinaryType = function (binaryType) {
+  this.getBinaryType = function (binaryType) {
 
     /* TODO: switch to constants */
 
@@ -195,6 +219,10 @@ function ContidioWidget() {
   this.getBinarySrc = function (entity, binaryPurpose, width) {
     var indexToUse = -1;
 
+    if(!entity.previewBinarySet || entity.previewBinarySet.length === 0){
+      return this.getPlaceholderSrc(entity);
+    }
+
     var bP = binaryPurpose ? binaryPurpose : 19000;
     var w = width ? width : 560;
 
@@ -209,9 +237,24 @@ function ContidioWidget() {
     if (indexToUse > -1) {
       return entity.previewBinarySet[0].calculatedBinary[indexToUse].downloadLink;
     } else {
-      return false;
+      return this.getPlaceholderSrc(entity);
     }
 
+  };
+
+  this.getPlaceholderSrc = function(entity) {
+    var type = this.getType(entity.type);
+    var binaryType = this.getBinaryType(entity.workingSetBinaryType);
+
+    if(type === "folder"){
+      return "https://www.contidio.com/assets/placeholders/folder_gray.png";
+    }
+
+    if(binaryType === "document"){
+      return "https://www.contidio.com/assets/placeholders/document_landscape.png";
+    }
+
+    return "https://www.contidio.com/assets/placeholders/"+binaryType+"_gray.png";
   };
 
   this.addEvent = function (object, type, callback) {
