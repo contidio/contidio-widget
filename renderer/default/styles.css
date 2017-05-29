@@ -150,12 +150,11 @@
 }
 
 .contidio-item-inner img {
-    width: 100%;
     min-height: 100%;
     transition: all 0.5s ease-in-out;
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: relative;
+    margin-left: -10000px;
+    margin-right: -10000px;
 }
 
 .contidio-item-inner:hover img {
