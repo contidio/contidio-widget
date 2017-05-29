@@ -7,29 +7,25 @@
 </head>
 <body>
 
-    <h1>Basic Example</h1>
+<h1>Basic Example</h1>
 
-    <!-- BEGIN: Contidio widget container -->
-    <div class="contidio-widget"></div>
-    <!-- END: Contidio widget container -->
+<!-- BEGIN: Contidio widget container -->
+<div class="contidio-widget"></div>
+<!-- END: Contidio widget container -->
 
-    <!-- BEGIN: Contidio renderer (customize if needed) -->
-    <link href="../renderer/default/styles.css" rel="stylesheet"/>
-    <script src="../renderer/default/renderer.js"></script>
-    <!-- END: Contidio renderer -->
+<!-- BEGIN: Contidio renderer (customize if needed) -->
+<link href="../renderer/default/styles.css" rel="stylesheet"/>
+<script src="../renderer/default/renderer.js"></script>
+<!-- END: Contidio renderer -->
 
-    <!-- BEGIN: Conditio widget snippet -->
-    <script>
-
-        var singleItem = "https://mdidx-staging.contidio.com:31446/api/v1/assets/30000ONPR/anonymous/?flags=145340470544642&locale=en";
-        var multiItem = "https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=402653184&startIndex=0&count=48&orderBy=2&orderDirection=2&recursive=1&types=1,2,3";
-
-        var contidioOptions = {
-            url: multiItem
-        }
-    </script>
-    <script src="../dist/contidio-widget.js" async defer></script>
-    <!-- END: Contidio widget snippet -->
+<!-- BEGIN: Conditio widget snippet -->
+<script>
+    var contidioOptions = {
+        url: "https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=402653184&startIndex=0&count=48&orderBy=2&orderDirection=2&recursive=1&types=1,2,3"
+    }
+</script>
+<script src="../dist/contidio-widget.js" async defer></script>
+<!-- END: Contidio widget snippet -->
 
 </body>
 </html>

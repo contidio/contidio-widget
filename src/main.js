@@ -109,7 +109,7 @@ function ContidioWidget() {
       description: entity.description || false,
       editorial: entity.editorial || false,
       type: this.getType(entity.type),
-      url: "https://www.contidio.com/"+this.getType(entity.type)+"/"+entity.uuid
+      url: "https://www.contidio.com/" + this.getType(entity.type) + "/" + entity.uuid
     };
 
     if (entity.workingSetBinaryType) {
@@ -219,7 +219,7 @@ function ContidioWidget() {
   this.getBinarySrc = function (entity, binaryPurpose, width) {
     var indexToUse = -1;
 
-    if(!entity.previewBinarySet || entity.previewBinarySet.length === 0){
+    if (!entity.previewBinarySet || entity.previewBinarySet.length === 0) {
       return this.getPlaceholderSrc(entity);
     }
 
@@ -242,19 +242,19 @@ function ContidioWidget() {
 
   };
 
-  this.getPlaceholderSrc = function(entity) {
+  this.getPlaceholderSrc = function (entity) {
     var type = this.getType(entity.type);
     var binaryType = this.getBinaryType(entity.workingSetBinaryType);
 
-    if(type === "folder"){
+    if (type === "folder") {
       return "https://www.contidio.com/assets/placeholders/folder_gray.png";
     }
 
-    if(binaryType === "document"){
+    if (binaryType === "document") {
       return "https://www.contidio.com/assets/placeholders/document_landscape.png";
     }
 
-    return "https://www.contidio.com/assets/placeholders/"+binaryType+"_gray.png";
+    return "https://www.contidio.com/assets/placeholders/" + binaryType + "_gray.png";
   };
 
   this.addEvent = function (object, type, callback) {

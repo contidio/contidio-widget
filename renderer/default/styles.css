@@ -18,7 +18,7 @@
 }
 
 .contidio-item.folder:before,
-.contidio-item.folder:after{
+.contidio-item.folder:after {
     position: absolute;
     width: calc(100% - 30px);
     height: calc(100% - 30px);
@@ -86,7 +86,7 @@
     transition-timing-function: ease-out;
 }
 
-.contidio-item-inner:hover:before{
+.contidio-item-inner:hover:before {
     left: 0;
     right: 0;
 }
@@ -176,11 +176,11 @@
 }
 
 .contidio-asset-preview video::-internal-media-controls-download-button {
-    display:none;
+    display: none;
 }
 
 .contidio-asset-preview video::-webkit-media-controls-enclosure {
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .contidio-asset-preview video::-webkit-media-controls-panel {
@@ -188,11 +188,11 @@
 }
 
 .contidio-asset-preview audio::-internal-media-controls-download-button {
-    display:none;
+    display: none;
 }
 
 .contidio-asset-preview audio::-webkit-media-controls-enclosure {
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .contidio-asset-preview audio::-webkit-media-controls-panel {
@@ -258,6 +258,7 @@
         font-size: 24pt;
         line-height: 28pt;
     }
+
     .contidio-asset-description {
         font-size: 18pt;
         line-height: 22pt;
@@ -269,6 +270,7 @@
         font-size: 20pt;
         line-height: 24pt;
     }
+
     .contidio-asset-description {
         font-size: 14pt;
         line-height: 16pt;

@@ -15,7 +15,7 @@ function Renderer(options, $) {
 
     var options = this.options;
 
-    $item = $("<a target='_blank' href='"+item.url+"' class='" + options.itemClass + " " + item.type + "'></a>");
+    $item = $("<a target='_blank' href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
     $item.data("uuid", item.uuid);
 
     $itemInner = $("<div class='contidio-item-inner'></div>");
@@ -31,7 +31,7 @@ function Renderer(options, $) {
     }
 
     if (item.previewImage) {
-      $imageContainer.append("<img class='contidio-item-image' alt='"+item.name+"' src='" + item.previewImage + "'/>");
+      $imageContainer.append("<img class='contidio-item-image' alt='" + item.name + "' src='" + item.previewImage + "'/>");
     }
 
     $itemInner.append($imageContainer);
@@ -62,40 +62,40 @@ function Renderer(options, $) {
     if (item.binaryType) {
 
       if (item.binaryType == "image") {
-        $assetPreview.append("<div class='contidio-image-wrapper'><img src='"+item.previewImage+"' /></div>");
+        $assetPreview.append("<div class='contidio-image-wrapper'><img src='" + item.previewImage + "' /></div>");
       } else if (item.binaryType == "audio") {
-        $assetPreview.append("<div class='contidio-audio-wrapper'><img src='"+item.previewImage+"' /><audio controls><source src='"+item.audioSrc+"' type='audio/mp4'/></audio></div>");
+        $assetPreview.append("<div class='contidio-audio-wrapper'><img src='" + item.previewImage + "' /><audio controls><source src='" + item.audioSrc + "' type='audio/mp4'/></audio></div>");
       } else if (item.binaryType == "video") {
-        $assetPreview.append("<div class='contidio-video-wrapper'><video controls poster='"+item.previewImage+"'><source src='"+item.videoSrc+"' type='video/mp4'/></video></div>");
+        $assetPreview.append("<div class='contidio-video-wrapper'><video controls poster='" + item.previewImage + "'><source src='" + item.videoSrc + "' type='video/mp4'/></video></div>");
       } else if (item.binaryType == "document") {
-        $assetPreview.append("<div class='contidio-document-wrapper'><img src='"+item.previewImage+"' /></div>");
+        $assetPreview.append("<div class='contidio-document-wrapper'><img src='" + item.previewImage + "' /></div>");
       }
 
     }
 
     $assetData = $("<div class='contidio-asset-data'></div>");
 
-    $assetData.append("<div class='contidio-asset-name'>"+item.name+"</div>");
+    $assetData.append("<div class='contidio-asset-name'>" + item.name + "</div>");
 
-    if(item.description){
-      $assetData.append("<div class='contidio-asset-description'>"+item.description+"</div>");
+    if (item.description) {
+      $assetData.append("<div class='contidio-asset-description'>" + item.description + "</div>");
     }
-    if(item.editorial){
-      $assetData.append("<div class='contidio-asset-editorial'>"+item.editorial+"</div>");
+    if (item.editorial) {
+      $assetData.append("<div class='contidio-asset-editorial'>" + item.editorial + "</div>");
     }
 
-    if(item.tags){
+    if (item.tags) {
       $tags = $("<ul class='contidio-asset-tags'></ul>");
 
-      for(t = 0; t < item.tags.length; t++) {
-        $tags.append("<li class='contidio-asset-tag'>"+item.tags[t].text+"</li>");
+      for (t = 0; t < item.tags.length; t++) {
+        $tags.append("<li class='contidio-asset-tag'>" + item.tags[t].text + "</li>");
       }
 
       $assetData.append($tags);
     }
 
-    if(item.author){
-      $assetData.append("<div class='contidio-asset-author'>"+item.author+"</div>");
+    if (item.author) {
+      $assetData.append("<div class='contidio-asset-author'>" + item.author + "</div>");
     }
 
     $detailView.append($assetPreview);
@@ -114,9 +114,9 @@ function Renderer(options, $) {
     var itemsPerRow = this.getItemsPerRow();
     var height = 0;
 
-    for(var j = 0; j < $entries.length; j++) {
+    for (var j = 0; j < $entries.length; j++) {
 
-      $entries[j].style.height= "auto";
+      $entries[j].style.height = "auto";
 
       height = Math.max(height, $entries[j].offsetHeight);
 
