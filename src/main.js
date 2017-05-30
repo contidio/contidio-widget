@@ -2,7 +2,13 @@ function ContidioWidget() {
 
   this.defaultOptions = {
     container: ".contidio-widget",
-    itemClass: "contidio-item"
+    itemClass: "contidio-item",
+    translations: {
+      detailLink: "more"
+    },
+    onListClick: null,
+    beforeRender: null,
+    afterRender: null
   };
 
   this.mergeOptions = function (obj1, obj2) {
@@ -57,9 +63,14 @@ function ContidioWidget() {
       return response.json();
     }).then(function (json) {
 
+      that.extractItems(json);
+
+      if(typeof options.beforeRender === "function"){
+        options.beforeRender(that.items);
+      }
+
       if (json.entity) {
 
-        that.extractItems(json);
 
         var $itemList = $("<div class='contidio-item-list'></div>");
 
@@ -71,9 +82,12 @@ function ContidioWidget() {
 
       } else {
 
-        that.extractItems(json);
-
         $(options.container).append(renderer.renderDetailView(that.items[0]));
+
+      }
+
+      if(typeof options.afterRender === "function"){
+        options.afterRender(that.items);
       }
 
       if (renderer.resize) {

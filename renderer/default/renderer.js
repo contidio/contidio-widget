@@ -15,7 +15,12 @@ function Renderer(options, $) {
 
     var options = this.options;
 
-    $item = $("<a target='_blank' href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
+    $item = $("<a target='_blank' "+"href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
+
+    if(typeof options.onClick === "function"){
+      $item.on("click",options.onClick.bind(this, item));
+    }
+
     $item.data("uuid", item.uuid);
 
     $itemInner = $("<div class='contidio-item-inner'></div>");
@@ -39,6 +44,22 @@ function Renderer(options, $) {
     $itemText = $("<div class='contidio-text-container'></div>");
 
     $itemText.append("<div class='contidio-item-name'>" + item.name + "</div>");
+
+    $itemMeta = $("<div class='contidio-item-meta'></div>");
+
+    if(item.authorImage) {
+      $itemMeta.append("<span class='contidio-item-author-image'><img src='"+item.authorImage+"'/></span>");
+    }
+    if(item.author) {
+      $itemMeta.append("<span class='contidio-item-author-name'>"+item.author+"</span>");
+    }
+    if(item.date) {
+      $itemMeta.append("<span class='contidio-item-date'>"+item.date+"</span>");
+    }
+
+    $itemText.append($itemMeta);
+
+    $itemText.append("<div class='contidio-detail-link'>" + options.translations.detailLink + "</div>");
 
     $itemInner.append($itemText);
 
@@ -116,16 +137,18 @@ function Renderer(options, $) {
 
     for (var j = 0; j < $entries.length; j++) {
 
-      $entries[j].style.height = "auto";
+      var $title = $($entries[j]).find(".contidio-item-name")[0];
 
-      height = Math.max(height, $entries[j].offsetHeight);
+      $title.style.height = "auto";
+
+      height = Math.max(height, $title.offsetHeight);
 
       if ((j + 1) % itemsPerRow == 0) {
 
         for (var i = 0; i < itemsPerRow; i++) {
 
           if (i + j < $entries.length) {
-            $entries[j - i].style.height = height + "px";
+            $($entries[j - i]).find(".contidio-item-name")[0].style.height = height + "px";
           }
         }
 
