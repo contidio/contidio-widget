@@ -117,6 +117,7 @@ function ContidioWidget() {
   };
 
   this.getItemData = function (entity, isDetail) {
+
     var item = {
       uuid: entity.uuid,
       name: entity.name ? entity.name : entity.uuid,
@@ -137,6 +138,12 @@ function ContidioWidget() {
     if (entity.previewBinarySet && entity.previewBinarySet[0].author) {
       item.author = entity.previewBinarySet[0].author;
     }
+
+    var timeStampForDate = entity.lastUpdatedTimestamp || entity.createdTimestamp;
+
+    var date = new Date(timeStampForDate);
+
+    item.date = (date.getDate() < 10 ? "0" : 0) + date.getDate()+"."+(date.getMonth() < 9 ? "0" : 0)+(date.getMonth()+1)+"."+date.getFullYear();
 
     var width = isDetail ? 875 : 350;
     var previewBinaryPurpose = 19000;

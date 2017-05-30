@@ -25,8 +25,9 @@
 
             for(var i = 0; i < items.length; i++){
                 items[i].category = "Trends & Markt";
-                items[i].author = "John Doe";
-                items[i].date = "01.04.2017";
+                if(!items[i].author){
+                    items[i].author = "John Doe";
+                }
                 items[i].authorImage = "https://www.celum.com/cache/image/40x40-bb8b01f48c3d724fdc8416d6781cc7c7-1494836249.jpg";
             }
 
@@ -43,7 +44,7 @@
             }
             console.log(item);
         },
-        url: "https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=402653184&startIndex=0&count=48&orderBy=2&orderDirection=2&recursive=1&types=1,2,3"
+        url: "https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=145340470544642&startIndex=0&count=48&orderBy=2&orderDirection=2&recursive=1&types=1,2,3"
     }
 </script>
 <script src="../dist/contidio-widget.js" async defer></script>

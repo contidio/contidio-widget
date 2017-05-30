@@ -137,26 +137,32 @@ function Renderer(options, $) {
     var $entries = $(this.options.container + " ." + this.options.itemClass);
 
     var itemsPerRow = this.getItemsPerRow();
-    var height = 0;
+    var titleHeight = 0;
+    var metaHeight = 0;
 
     for (var j = 0; j < $entries.length; j++) {
 
       var $title = $($entries[j]).find(".contidio-item-name")[0];
+      var $meta = $($entries[j]).find(".contidio-item-meta")[0];
 
       $title.style.height = "auto";
+      $meta.style.height = "auto";
 
-      height = Math.max(height, $title.offsetHeight);
+      titleHeight = Math.max(titleHeight, $title.offsetHeight);
+      metaHeight = Math.max(metaHeight, $meta.offsetHeight);
 
       if ((j + 1) % itemsPerRow == 0) {
 
         for (var i = 0; i < itemsPerRow; i++) {
 
           if (i + j < $entries.length) {
-            $($entries[j - i]).find(".contidio-item-name")[0].style.height = height + "px";
+            $($entries[j - i]).find(".contidio-item-name")[0].style.height = titleHeight + "px";
+            $($entries[j - i]).find(".contidio-item-meta")[0].style.height = metaHeight + "px";
           }
         }
 
-        height = 0;
+        titleHeight = 0;
+        metaHeight = 0;
       }
     }
   };
