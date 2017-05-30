@@ -43,6 +43,10 @@ function Renderer(options, $) {
 
     $itemText = $("<div class='contidio-text-container'></div>");
 
+    if(item.category) {
+      $itemText.append("<div class='contidio-item-category'>" + item.category + "</div>");
+    }
+
     $itemText.append("<div class='contidio-item-name'>" + item.name + "</div>");
 
     $itemMeta = $("<div class='contidio-item-meta'></div>");

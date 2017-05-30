@@ -159,6 +159,11 @@
     display: inline-block;
 }
 
+.contidio-item-category {
+    color: #004c78;
+    padding-bottom: 20px;
+}
+
 .contidio-item-name {
     text-align: left;
     font-size: 129%;
