@@ -87,20 +87,44 @@ function Renderer(options, $) {
     if (item.binaryType) {
 
       if (item.binaryType == "image") {
-        $assetPreview.append("<div class='contidio-image-wrapper'><img src='" + item.previewImage + "' /></div>");
+        $assetPreview.append("<div class='contidio-preview-wrapper contidio-image-wrapper'><img src='" + item.previewImage + "' /></div>");
       } else if (item.binaryType == "audio") {
-        $assetPreview.append("<div class='contidio-audio-wrapper'><img src='" + item.previewImage + "' /><audio controls><source src='" + item.audioSrc + "' type='audio/mp4'/></audio></div>");
+        $assetPreview.append("<div class='contidio-preview-wrapper contidio-audio-wrapper'><img src='" + item.previewImage + "' /><audio controls><source src='" + item.audioSrc + "' type='audio/mp4'/></audio></div>");
       } else if (item.binaryType == "video") {
-        $assetPreview.append("<div class='contidio-video-wrapper'><video controls poster='" + item.previewImage + "'><source src='" + item.videoSrc + "' type='video/mp4'/></video></div>");
+        $assetPreview.append("<div class='contidio-preview-wrapper contidio-video-wrapper'><video controls poster='" + item.previewImage + "'><source src='" + item.videoSrc + "' type='video/mp4'/></video></div>");
       } else if (item.binaryType == "document") {
-        $assetPreview.append("<div class='contidio-document-wrapper'><img src='" + item.previewImage + "' /></div>");
+        $assetPreview.append("<div class='contidio-preview-wrapper contidio-document-wrapper'><img src='" + item.previewImage + "' /></div>");
+        if(item.isStory){
+          $assetPreview.append("<div class='contidio-story-title'><div class='contidio-center-wrapper'><div class='contidio-center-content'>"+item.name+"</div></div></div>");
+        }
       }
 
     }
 
-    $assetData = $("<div class='contidio-asset-data'></div>");
+    /* Asset Meta Data */
+    $assetMeta = $("<div class='contidio-asset-meta'></div>");
 
-    $assetData.append("<div class='contidio-asset-name'>" + item.name + "</div>");
+    $assetMetaContainer = $("<div class='contidio-container'></div>");
+
+    if(item.authorImage) {
+      $assetMetaContainer.append("<span class='contidio-item-author-image'><img src='"+item.authorImage+"'/></span>");
+    }
+    if(item.author) {
+      $assetMetaContainer.append("<span class='contidio-item-author-name'>"+item.author+"</span>");
+    }
+    if(item.date) {
+      $assetMetaContainer.append("<span class='contidio-item-date'>"+item.date+"</span>");
+    }
+
+    $assetMeta.append($assetMetaContainer);
+
+
+    /* Asset Data */
+    $assetData = $("<div class='contidio-asset-data contidio-container'></div>");
+
+    if(!item.isStory){
+      $assetData.append("<div class='contidio-asset-name'>" + item.name + "</div>");
+    }
 
     if (item.description) {
       $assetData.append("<div class='contidio-asset-description'>" + item.description + "</div>");
@@ -109,6 +133,8 @@ function Renderer(options, $) {
       $assetData.append("<div class='contidio-asset-editorial'>" + item.editorial + "</div>");
     }
 
+
+    /* Tags */
     if (item.tags) {
       $tags = $("<ul class='contidio-asset-tags'></ul>");
 
@@ -119,11 +145,10 @@ function Renderer(options, $) {
       $assetData.append($tags);
     }
 
-    if (item.author) {
-      $assetData.append("<div class='contidio-asset-author'>" + item.author + "</div>");
-    }
 
+    /* Putting it all together */
     $detailView.append($assetPreview);
+    $detailView.append($assetMeta);
     $detailView.append($assetData);
 
     return $detailView;
@@ -138,18 +163,14 @@ function Renderer(options, $) {
 
     var itemsPerRow = this.getItemsPerRow();
     var titleHeight = 0;
-    var metaHeight = 0;
 
     for (var j = 0; j < $entries.length; j++) {
 
       var $title = $($entries[j]).find(".contidio-item-name")[0];
-      var $meta = $($entries[j]).find(".contidio-item-meta")[0];
 
       $title.style.height = "auto";
-      $meta.style.height = "auto";
 
       titleHeight = Math.max(titleHeight, $title.offsetHeight);
-      metaHeight = Math.max(metaHeight, $meta.offsetHeight);
 
       if ((j + 1) % itemsPerRow == 0) {
 
@@ -157,12 +178,10 @@ function Renderer(options, $) {
 
           if (i + j < $entries.length) {
             $($entries[j - i]).find(".contidio-item-name")[0].style.height = titleHeight + "px";
-            $($entries[j - i]).find(".contidio-item-meta")[0].style.height = metaHeight + "px";
           }
         }
 
         titleHeight = 0;
-        metaHeight = 0;
       }
     }
   };

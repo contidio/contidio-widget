@@ -1,7 +1,15 @@
-.contidio-item-list,
-.contidio-detail-view {
-    position: relative;
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.contidio-widget {
     font-family: OpenSans, Arial, sans-serif;
+}
+
+
+.contidio-container {
+    position: relative;
     width: 100%;
     max-width: 1170px;
     margin: 0 auto;
@@ -64,11 +72,11 @@
     position: relative;
     height: 100%;
     z-index: 10;
+    cursor: pointer;
 }
 
 .contidio-item-inner:hover {
     background-color: #f4f4f4;
-    cursor: pointer;
 }
 
 .contidio-item-inner:before {
@@ -195,6 +203,17 @@
     line-height: 40px;
 }
 
+.contidio-item-meta .contidio-item-author-name {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 135px);
+    white-space: nowrap;
+    line-height: 40px;
+    top: 16px;
+}
+
 .contidio-item-author-image {
     position: relative;
     overflow: hidden;
@@ -219,11 +238,13 @@
 
 .contidio-asset-preview {
     text-align: center;
-    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
 }
 
 .contidio-asset-preview img {
     max-width: 100%;
+    margin-bottom: -6px;
 }
 
 .contidio-asset-preview video::-internal-media-controls-download-button {
@@ -303,6 +324,52 @@
     right: 0;
     width: 100%;
 }
+
+.contidio-preview-wrapper {
+    position: relative;
+}
+
+.contidio-story-title {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(8, 28, 45, 0.6);
+    font-size: 70px;
+    color: #fff;
+}
+
+.contidio-asset-meta {
+    position: relative;
+    width: 100%;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #d3d6d9;
+    min-height: 90px;
+    box-sizing: border-box;
+    padding: 24px 0;
+    color: #a0a9b1;
+    font-style: italic;
+}
+
+.contidio-asset-data {
+    margin-top: 20px;
+}
+
+.contidio-center-wrapper {
+    position: relative;
+    display: table;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.contidio-center-content {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 
 @media (max-width: 767px) {
     .contidio-asset-name {

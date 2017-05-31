@@ -72,7 +72,7 @@ function ContidioWidget() {
       if (json.entity) {
 
 
-        var $itemList = $("<div class='contidio-item-list'></div>");
+        var $itemList = $("<div class='contidio-item-list contidio-container'></div>");
 
         for (var i = 0; i < that.items.length; i++) {
           $itemList.append(renderer.renderListView(that.items[i]));
@@ -117,6 +117,8 @@ function ContidioWidget() {
   };
 
   this.getItemData = function (entity, isDetail) {
+
+    console.log(entity);
 
     var item = {
       uuid: entity.uuid,
@@ -165,11 +167,31 @@ function ContidioWidget() {
             item.videoSrc = this.getBinarySrc(entity, 19005, width);
             break;
           case "document":
-            previewBinaryPurpose = 19002;
-            item.pdfSrc = this.getBinarySrc(entity, 10001, -2);
-            width = 700;
-            break;
+            //check if document is richtext story
+            if(entity.asset && entity.asset.type && entity.asset.type === 2) {
+              item.isStory = true;
+              var htmlSrc = this.getBinarySrc(entity, 10001, -2);
+              previewBinaryPurpose = 19010;
+              width = 875;
 
+              fetch(htmlSrc, {
+                headers: {
+                  'x-contidio-sdk': '1.0-JS'
+                }
+              }).then(function (response) {
+                response.text();
+              }).then(function (text){
+                item.html = text;
+              });
+
+            }else{
+              item.isStory = false;
+              previewBinaryPurpose = 19002;
+              item.pdfSrc = this.getBinarySrc(entity, 10001, -2);
+              width = 700;
+
+            }
+            break;
         }
       }
     } else {
@@ -197,6 +219,8 @@ function ContidioWidget() {
     }
 
     item.previewImage = this.getBinarySrc(entity, previewBinaryPurpose, width);
+
+    console.log(item);
 
     return item;
   };
