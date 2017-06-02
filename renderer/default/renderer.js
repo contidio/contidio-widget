@@ -129,9 +129,18 @@ function Renderer(options, $) {
     if (item.description) {
       $assetData.append("<div class='contidio-asset-description'>" + item.description + "</div>");
     }
+
     if (item.editorial) {
       $assetData.append("<div class='contidio-asset-editorial'>" + item.editorial + "</div>");
     }
+
+    console.log(item);
+    console.log(item.html);
+
+    if (item.html) {
+      $assetData.append("<div class='contidio-asset-story'>" + item.html + "</div>");
+    }
+
 
 
     /* Tags */

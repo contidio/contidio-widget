@@ -118,8 +118,6 @@ function ContidioWidget() {
 
   this.getItemData = function (entity, isDetail) {
 
-    console.log(entity);
-
     var item = {
       uuid: entity.uuid,
       name: entity.name ? entity.name : entity.uuid,
@@ -179,7 +177,7 @@ function ContidioWidget() {
                   'x-contidio-sdk': '1.0-JS'
                 }
               }).then(function (response) {
-                response.text();
+                 return response.text();
               }).then(function (text){
                 item.html = text;
               });
@@ -219,8 +217,6 @@ function ContidioWidget() {
     }
 
     item.previewImage = this.getBinarySrc(entity, previewBinaryPurpose, width);
-
-    console.log(item);
 
     return item;
   };
