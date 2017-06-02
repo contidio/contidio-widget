@@ -134,15 +134,6 @@ function Renderer(options, $) {
       $assetData.append("<div class='contidio-asset-editorial'>" + item.editorial + "</div>");
     }
 
-    console.log(item);
-    console.log(item.html);
-
-    if (item.html) {
-      $assetData.append("<div class='contidio-asset-story'>" + item.html + "</div>");
-    }
-
-
-
     /* Tags */
     if (item.tags) {
       $tags = $("<ul class='contidio-asset-tags'></ul>");
@@ -153,6 +144,15 @@ function Renderer(options, $) {
 
       $assetData.append($tags);
     }
+
+    /* Richtext */
+    if(item.html){
+      item.html.then(function(text){
+        $assetData.append("<div class='contidio-asset-story'>" + text + "</div>");
+      });
+    }
+
+
 
 
     /* Putting it all together */

@@ -172,14 +172,14 @@ function ContidioWidget() {
               previewBinaryPurpose = 19010;
               width = 875;
 
-              fetch(htmlSrc, {
+              item.html = fetch(htmlSrc, {
                 headers: {
                   'x-contidio-sdk': '1.0-JS'
                 }
               }).then(function (response) {
                  return response.text();
               }).then(function (text){
-                item.html = text;
+                return text;
               });
 
             }else{
