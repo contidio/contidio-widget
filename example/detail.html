@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contidio Widget Basic Example</title>
+</head>
+<body>
+
+<h1>Example: Detail Basic</h1>
+
+<!-- BEGIN: Contidio widget container -->
+<div class="contidio-widget"></div>
+<!-- END: Contidio widget container -->
+
+<!-- BEGIN: Contidio renderer (customize if needed) -->
+<link href="../renderer/default/styles.css" rel="stylesheet"/>
+<script src="../renderer/default/renderer.js"></script>
+<!-- END: Contidio renderer -->
+
+<!-- BEGIN: Conditio widget snippet -->
+<script>
+    var contidioOptions = {
+        beforeRender: function(items){
+
+            for(var i = 0; i < items.length; i++){
+                items[i].category = "Trends & Markt";
+                if(!items[i].author){
+                    items[i].author = "John Doe";
+                }
+                items[i].authorImage = "https://www.celum.com/cache/image/40x40-bb8b01f48c3d724fdc8416d6781cc7c7-1494836249.jpg";
+            }
+
+        },
+        url: "https://mdidx.contidio.com/api/v1/assets/300004F1O/anonymous/?flags=145340470544642&locale=en"
+    }
+</script>
+<script src="../dist/contidio-widget.js" async defer></script>
+<!-- END: Contidio widget snippet -->
+
+</body>
+</html>

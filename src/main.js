@@ -29,14 +29,6 @@ function ContidioWidget() {
 
     var Promise = require('promise-polyfill');
 
-    var $;
-
-    if (typeof jQuery === 'undefined') {
-      $ = require('domtastic');
-    } else {
-      $ = jQuery;
-    }
-
     require('whatwg-fetch');
 
     if (!window.Promise) {
@@ -45,14 +37,23 @@ function ContidioWidget() {
 
     var url = this.options.url ? this.options.url : '';
 
-    this.fetchUrl(url, $);
+    this.fetchUrl(url);
 
   };
 
-  this.fetchUrl = function (url, $) {
+  this.fetchUrl = function (url) {
+
+    var $;
+    this.items = [];
+
+    if (typeof jQuery === 'undefined') {
+      $ = require('domtastic');
+    } else {
+      $ = jQuery;
+    }
 
     var options = this.options;
-    var renderer = new Renderer(options, $);
+    var renderer = new Renderer(this, $);
     var that = this;
 
     fetch(url, {
@@ -65,12 +66,11 @@ function ContidioWidget() {
 
       that.extractItems(json);
 
-      if(typeof options.beforeRender === "function"){
+      if (typeof options.beforeRender === "function") {
         options.beforeRender(that.items);
       }
 
       if (json.entity) {
-
 
         var $itemList = $("<div class='contidio-item-list contidio-container'></div>");
 
@@ -78,15 +78,16 @@ function ContidioWidget() {
           $itemList.append(renderer.renderListView(that.items[i]));
         }
 
-        $(options.container).append($itemList);
+        $(options.container)[0].innerHTML = "";
+        $(options.container).html("").append($itemList);
 
       } else {
 
-        $(options.container).append(renderer.renderDetailView(that.items[0]));
+        $(options.container).html("").append(renderer.renderDetailView(that.items[0]));
 
       }
 
-      if(typeof options.afterRender === "function"){
+      if (typeof options.afterRender === "function") {
         options.afterRender(that.items);
       }
 
@@ -143,7 +144,7 @@ function ContidioWidget() {
 
     var date = new Date(timeStampForDate);
 
-    item.date = (date.getDate() < 10 ? "0" : 0) + date.getDate()+"."+(date.getMonth() < 9 ? "0" : 0)+(date.getMonth()+1)+"."+date.getFullYear();
+    item.date = (date.getDate() < 10 ? "0" : 0) + date.getDate() + "." + (date.getMonth() < 9 ? "0" : 0) + (date.getMonth() + 1) + "." + date.getFullYear();
 
     var width = isDetail ? 875 : 350;
     var previewBinaryPurpose = 19000;
@@ -166,9 +167,14 @@ function ContidioWidget() {
             break;
           case "document":
             //check if document is richtext story
-            if(entity.asset && entity.asset.type && entity.asset.type === 2) {
+            if (entity.asset && entity.asset.type && entity.asset.type === 2) {
               item.isStory = true;
               item.coverImage = this.getBinarySrc(entity, 19008, 1920);
+
+              if (item.coverImage.indexOf("placeholder") > -1) {
+                item.coverImage = false;
+              }
+
               var htmlSrc = this.getBinarySrc(entity, 10001, -2);
               previewBinaryPurpose = 19010;
               width = 875;
@@ -178,12 +184,12 @@ function ContidioWidget() {
                   'x-contidio-sdk': '1.0-JS'
                 }
               }).then(function (response) {
-                 return response.text();
-              }).then(function (text){
+                return response.text();
+              }).then(function (text) {
                 return text;
               });
 
-            }else{
+            } else {
               item.isStory = false;
               previewBinaryPurpose = 19002;
               item.pdfSrc = this.getBinarySrc(entity, 10001, -2);
@@ -218,8 +224,6 @@ function ContidioWidget() {
     }
 
     item.previewImage = this.getBinarySrc(entity, previewBinaryPurpose, width);
-
-    console.log(item);
 
     return item;
   };
@@ -315,6 +319,7 @@ function ContidioWidget() {
 }
 
 var cw = new ContidioWidget();
+
 cw.init();
 
 

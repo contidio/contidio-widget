@@ -2,9 +2,10 @@
  @param {Object} options
  @param $ DOMtastic, see https://domtastic.js.org/
  */
-function Renderer(options, $) {
+function Renderer(widget, $) {
 
-  this.options = options ? options : {};
+  this.widget = widget;
+  this.options = (widget && widget.options) ? widget.options : {};
 
   /**
    * used to render an item list view
@@ -17,8 +18,8 @@ function Renderer(options, $) {
 
     $item = $("<a target='_blank' "+"href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
 
-    if(typeof options.onClick === "function"){
-      $item.on("click",options.onClick.bind(this, item));
+    if(typeof options.onListClick === "function"){
+      $item.on("click",options.onListClick.bind(this, item, widget));
     }
 
     $item.data("uuid", item.uuid);
