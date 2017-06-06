@@ -16,7 +16,7 @@ function Renderer(widget, $) {
 
     var options = this.options;
 
-    $item = $("<a target='_blank' "+"href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
+    $item = $("<a target='"+options.onListClickTarget+"' "+"href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
 
     if(typeof options.onListClick === "function"){
       $item.on("click",options.onListClick.bind(this, item, widget));
@@ -28,18 +28,21 @@ function Renderer(widget, $) {
 
     $imageContainer = $("<div class='contidio-image-container'></div>");
 
+    $imagePositioner = $("<div class='contidio-image-positioner'></div>");
+
     if (item.binaryType) {
       if (item.binaryType == "audio") {
-        $imageContainer.append("<i class='contidio-icon contidio-icon-audio'>&#9836;</i>");
+        $imagePositioner.append("<i class='contidio-icon contidio-icon-audio'>&#9836;</i>");
       } else if (item.binaryType == "video") {
-        $imageContainer.append("<i class='contidio-icon contidio-icon-video'>&#9655;</i>");
+        $imagePositioner.append("<i class='contidio-icon contidio-icon-video'>&#9655;</i>");
       }
     }
 
     if (item.previewImage) {
-      $imageContainer.append("<img class='contidio-item-image' alt='" + item.name + "' src='" + item.previewImage + "'/>");
+      $imagePositioner.append("<img class='contidio-item-image' alt='" + item.name + "' src='" + item.previewImage + "'/>");
     }
 
+    $imageContainer.append($imagePositioner);
     $itemInner.append($imageContainer);
 
     $itemText = $("<div class='contidio-text-container'></div>");

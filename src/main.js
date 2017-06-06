@@ -7,6 +7,7 @@ function ContidioWidget() {
       detailLink: "more"
     },
     onListClick: null,
+    onListClickTarget: "_blank",
     beforeRender: null,
     afterRender: null
   };

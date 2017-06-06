@@ -9,6 +9,22 @@
 
 <h1>Example: Detail Basic</h1>
 
+<!-- BEGIN: EXAMPLE HELPER CODE -->
+<script>
+    function getParameterByName(name) {
+        var url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    var uuid = getParameterByName("cw-uuid") || "300004F1O";
+    var exampleUrl = "https://mdidx.contidio.com/api/v1/assets/"+uuid+"/anonymous/?flags=145340470544642&locale=en";
+</script>
+<!-- END: EXAMPLE HELPER CODE -->
+
 <!-- BEGIN: Contidio widget container -->
 <div class="contidio-widget"></div>
 <!-- END: Contidio widget container -->
@@ -32,7 +48,7 @@
             }
 
         },
-        url: "https://mdidx.contidio.com/api/v1/assets/300004F1O/anonymous/?flags=145340470544642&locale=en"
+        url: exampleUrl
     }
 </script>
 <script src="../dist/contidio-widget.js" async defer></script>
