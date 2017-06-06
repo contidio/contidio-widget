@@ -93,7 +93,7 @@ function Renderer(options, $) {
       } else if (item.binaryType == "video") {
         $assetPreview.append("<div class='contidio-preview-wrapper contidio-video-wrapper'><video controls poster='" + item.previewImage + "'><source src='" + item.videoSrc + "' type='video/mp4'/></video></div>");
       } else if (item.binaryType == "document") {
-        $assetPreview.append("<div class='contidio-preview-wrapper contidio-document-wrapper'><img src='" + item.previewImage + "' /></div>");
+        $assetPreview.append("<div class='contidio-preview-wrapper contidio-document-wrapper'><img src='" + (item.coverImage ? item.coverImage : item.previewImage) + "' /></div>");
         if(item.isStory){
           $assetPreview.append("<div class='contidio-story-title'><div class='contidio-center-wrapper'><div class='contidio-center-content'>"+item.name+"</div></div></div>");
         }

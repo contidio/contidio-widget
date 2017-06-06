@@ -168,6 +168,7 @@ function ContidioWidget() {
             //check if document is richtext story
             if(entity.asset && entity.asset.type && entity.asset.type === 2) {
               item.isStory = true;
+              item.coverImage = this.getBinarySrc(entity, 19008, 1920);
               var htmlSrc = this.getBinarySrc(entity, 10001, -2);
               previewBinaryPurpose = 19010;
               width = 875;
@@ -217,6 +218,8 @@ function ContidioWidget() {
     }
 
     item.previewImage = this.getBinarySrc(entity, previewBinaryPurpose, width);
+
+    console.log(item);
 
     return item;
   };
