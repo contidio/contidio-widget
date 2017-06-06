@@ -115,6 +115,9 @@ function Renderer(options, $) {
     if(item.date) {
       $assetMetaContainer.append("<span class='contidio-item-date'>"+item.date+"</span>");
     }
+    if(item.category) {
+      $assetMetaContainer.append("<div class='contidio-item-category'>"+item.category+"</div>");
+    }
 
     $assetMeta.append($assetMetaContainer);
 

@@ -167,9 +167,15 @@ body {
     display: inline-block;
 }
 
-.contidio-item-category {
+.contidio-item .contidio-item-category {
     color: #004c78;
     padding-bottom: 20px;
+}
+
+.contidio-detail-view .contidio-item-category {
+    float: right;
+    line-height: 40px;
+    font-style: normal;
 }
 
 .contidio-item-name {
@@ -355,7 +361,7 @@ body {
 }
 
 .contidio-asset-data {
-    margin-top: 20px;
+    padding: 60px 0 30px 0;
 }
 
 .contidio-asset-story h3{
