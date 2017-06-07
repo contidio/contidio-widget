@@ -4,7 +4,11 @@ body {
 }
 
 .contidio-widget {
-    font-family: OpenSans, Arial, sans-serif;
+    color: #5c6166;
+    font-family: "Open Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.65em;
 }
 
 
@@ -12,7 +16,11 @@ body {
     position: relative;
     width: 100%;
     max-width: 1170px;
-    margin: 0 auto;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
 }
 
 .contidio-item {
@@ -360,9 +368,23 @@ body {
     color: #a0a9b1;
     font-style: italic;
 }
+.contidio-asset-meta:empty {
+    display: none;
+}
+
+.contidio-asset-meta .contidio-item-author-image{
+    margin-left: 6.25%;
+}
 
 .contidio-asset-data {
     padding: 60px 0 30px 0;
+}
+
+.contidio-asset-story,
+.contidio-asset-description,
+.contidio-asset-tags {
+    padding: 0 15px 0 6.25%;
+    box-sizing: border-box;
 }
 
 .contidio-asset-story h3{

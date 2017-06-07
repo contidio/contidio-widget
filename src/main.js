@@ -150,36 +150,36 @@ function ContidioWidget() {
     item.date = (date.getDate() < 10 ? "0" : 0) + date.getDate() + "." + (date.getMonth() < 9 ? "0" : 0) + (date.getMonth() + 1) + "." + date.getFullYear();
 
     var width = isDetail ? 875 : 350;
-    var previewBinaryPurpose = 19000;
+    var previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW;
 
     if (isDetail) {
-      previewBinaryPurpose = item.type == "folder" ? 1200 : 19001;
+      previewBinaryPurpose = item.type == "folder" ? this.CONSTANTS.BinaryPurpose.FOLDER_LIST_PREVIEW : this.CONSTANTS.BinaryPurpose.ASSET_PREVIEW;
 
       if (item.binaryType) {
         switch (item.binaryType) {
           case "image":
-            previewBinaryPurpose = 19001;
+            previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_PREVIEW;
             break;
           case "audio":
-            previewBinaryPurpose = 19006;
-            item.audioSrc = this.getBinarySrc(entity, 19005, -1);
+            previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_COVER;
+            item.audioSrc = this.getBinarySrc(entity, this.CONSTANTS.BinaryPurpose.ASSET_ADVANCED_PREVIEW, -1);
             break;
           case "video":
-            previewBinaryPurpose = 19004;
-            item.videoSrc = this.getBinarySrc(entity, 19005, width);
+            previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_ADVANCED_PREVIEW_IMAGE;
+            item.videoSrc = this.getBinarySrc(entity, this.CONSTANTS.BinaryPurpose.ASSET_ADVANCED_PREVIEW, width);
             break;
           case "document":
             //check if document is richtext story
             if (entity.asset && entity.asset.type && entity.asset.type === 2) {
               item.isStory = true;
-              item.coverImage = this.getBinarySrc(entity, 19008, 1920);
+              item.coverImage = this.getBinarySrc(entity, this.CONSTANTS.BinaryPurpose.ASSET_BACKGROUND, 1920);
 
               if (item.coverImage.indexOf("placeholder") > -1) {
                 item.coverImage = false;
               }
 
-              var htmlSrc = this.getBinarySrc(entity, 10001, -2);
-              previewBinaryPurpose = 19010;
+              var htmlSrc = this.getBinarySrc(entity, this.CONSTANTS.BinaryPurpose.ASSET_BASE, -2);
+              previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_HEADER;
               width = 875;
 
               item.html = fetch(htmlSrc, {
@@ -194,8 +194,8 @@ function ContidioWidget() {
 
             } else {
               item.isStory = false;
-              previewBinaryPurpose = 19002;
-              item.pdfSrc = this.getBinarySrc(entity, 10001, -2);
+              previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_ADVANCED_LIST_PREVIEW_IMAGE;
+              item.pdfSrc = this.getBinarySrc(entity, this.CONSTANTS.BinaryPurpose.ASSET_BASE, -2);
               width = 700;
 
             }
@@ -203,24 +203,24 @@ function ContidioWidget() {
         }
       }
     } else {
-      previewBinaryPurpose = item.type == "folder" ? 1200 : 19000;
+      previewBinaryPurpose = item.type == "folder" ? this.CONSTANTS.BinaryPurpose.FOLDER_LIST_PREVIEW : this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW;
 
       switch (item.type) {
         case "brand":
-          previewBinaryPurpose = 100;
+          previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.BRAND_LOGO;
           break;
         case "folder":
-          previewBinaryPurpose = 1200;
+          previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.FOLDER_LIST_PREVIEW;
           break;
       }
 
       if (item.binaryType) {
         switch (item.binaryType) {
           case "video":
-            previewBinaryPurpose = 19002;
+            previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_ADVANCED_LIST_PREVIEW_IMAGE;
             break;
           case "document":
-            previewBinaryPurpose = (entity.asset && entity.asset.type === 2) ? 19000 : 19002;
+            previewBinaryPurpose = (entity.asset && entity.asset.type === 2) ? this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW : this.CONSTANTS.BinaryPurpose.ASSET_ADVANCED_LIST_PREVIEW_IMAGE;
             break;
         }
       }
@@ -274,7 +274,7 @@ function ContidioWidget() {
       return this.getPlaceholderSrc(entity);
     }
 
-    var bP = binaryPurpose ? binaryPurpose : 19000;
+    var bP = binaryPurpose ? binaryPurpose : this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW;
     var w = width ? width : 560;
 
     for (var i = 0; i < entity.previewBinarySet[0].calculatedBinary.length; i++) {
@@ -319,7 +319,49 @@ function ContidioWidget() {
     }
   };
 
+  this.CONSTANTS = {
+    EXCERPT_END_IDENTIFIER : "--SNIP--",
+    BinaryPurpose : {
+      BRAND_LOGO : 100,
+      BRAND_ASSET : 150,
+      BRAND_BACKGROUND : 200,
+      BRAND_BACKGROUND_TALL : 250,
+      BRAND_WATERMARK : 300,
+      FOLDER_ASSET : 1000,
+      FOLDER_BACKGROUND : 1100,
+      FOLDER_BACKGROUND_TALL : 1150,
+      FOLDER_LIST_PREVIEW : 1200,
+      JOBS_ASSET : 1500,
+      JOBS_BACKGROUND : 1600,
+      JOBS_BACKGROUND_TALL : 1650,
+      JOBS_LIST_PREVIEW : 1700,
+      JOB_ASSET : 2000,
+      JOB_BACKGROUND : 2100,
+      JOB_BACKGROUND_TALL : 2150,
+      JOB_LIST_PREVIEW : 2200,
+      PROJECT_ASSET : 3000,
+      PROJECT_BACKGROUND : 3100,
+      PROJECT_BACKGROUND_TALL : 3150,
+      PROJECT_LIST_PREVIEW : 3200,
+      ASSET_ASSET : 10000,
+      ASSET_BASE : 10001,
+      ASSET_LIST_PREVIEW : 19000,
+      ASSET_PREVIEW : 19001,
+      ASSET_ADVANCED_LIST_PREVIEW_IMAGE : 19002,
+      ASSET_ADVANCED_LIST_PREVIEW : 19003,
+      ASSET_ADVANCED_PREVIEW_IMAGE : 19004,
+      ASSET_ADVANCED_PREVIEW : 19005,
+      ASSET_COVER : 19006,
+      ASSET_BACKGROUND_ASSET : 19007,
+      ASSET_BACKGROUND : 19008,
+      ASSET_BACKGROUND_TALL : 19009,
+      ASSET_HEADER : 19010,
+      ASSET_SPLITVIEW_LIST_PREVIEW : 19011
+    }
+  };
+
 }
+
 
 var cw = new ContidioWidget();
 

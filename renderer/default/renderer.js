@@ -92,9 +92,9 @@ function Renderer(widget, $) {
    */
   this.renderDetailView = function (item) {
 
-    $detailView = $("<div class='contidio-detail-view'></div>");
+    var $detailView = $("<div class='contidio-detail-view'></div>");
 
-    $assetPreview = $("<div class='contidio-asset-preview'></div>");
+    var $assetPreview = $("<div class='contidio-asset-preview'></div>");
 
     if (item.binaryType) {
 
@@ -114,28 +114,30 @@ function Renderer(widget, $) {
     }
 
     /* Asset Meta Data */
-    $assetMeta = $("<div class='contidio-asset-meta'></div>");
+    var $assetMeta = $("<div class='contidio-asset-meta'></div>");
 
-    $assetMetaContainer = $("<div class='contidio-container'></div>");
+    if(item.isStory){
+      var $assetMetaContainer = $("<div class='contidio-container'></div>");
 
-    if(item.authorImage) {
-      $assetMetaContainer.append("<span class='contidio-item-author-image'><img src='"+item.authorImage+"'/></span>");
-    }
-    if(item.author) {
-      $assetMetaContainer.append("<span class='contidio-item-author-name'>"+item.author+"</span>");
-    }
-    if(item.date) {
-      $assetMetaContainer.append("<span class='contidio-item-date'>"+item.date+"</span>");
-    }
-    if(item.category) {
-      $assetMetaContainer.append("<div class='contidio-item-category'>"+item.category+"</div>");
-    }
+      if(item.authorImage) {
+        $assetMetaContainer.append("<span class='contidio-item-author-image'><img src='"+item.authorImage+"'/></span>");
+      }
+      if(item.author) {
+        $assetMetaContainer.append("<span class='contidio-item-author-name'>"+item.author+"</span>");
+      }
+      if(item.date) {
+        $assetMetaContainer.append("<span class='contidio-item-date'>"+item.date+"</span>");
+      }
+      if(item.category) {
+        $assetMetaContainer.append("<div class='contidio-item-category'>"+item.category+"</div>");
+      }
 
-    $assetMeta.append($assetMetaContainer);
+      $assetMeta.append($assetMetaContainer);
+    }
 
 
     /* Asset Data */
-    $assetData = $("<div class='contidio-asset-data contidio-container'></div>");
+    var $assetData = $("<div class='contidio-asset-data contidio-container'></div>");
 
     if(!item.isStory){
       $assetData.append("<div class='contidio-asset-name'>" + item.name + "</div>");
@@ -162,7 +164,15 @@ function Renderer(widget, $) {
 
     /* Richtext */
     if(item.html){
+
+      var that = this;
+
       item.html.then(function(text){
+
+        if (text.indexOf(that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER) == text.length - that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER.length) {
+          text = text.replace(that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER, "");
+        }
+
         $assetData.append("<div class='contidio-asset-story'>" + text + "</div>");
       });
     }
