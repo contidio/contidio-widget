@@ -242,7 +242,7 @@ function Renderer(widget, $) {
     if(image.naturalWidth < image.naturalHeight) {
       image.style.height = "auto";
       image.style.width = "100%";
-    } else if(image.naturalWidth > image.naturalHeight) {
+    } else {
 
       var calcHeight = 100;
       var arDelta = 360 / 224 - image.naturalWidth / image.naturalHeight;
