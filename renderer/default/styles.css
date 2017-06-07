@@ -261,7 +261,7 @@ body {
 
 .contidio-asset-preview img {
     max-width: 100%;
-    margin-bottom: -6px;
+    margin-bottom: -9px;
 }
 
 .contidio-asset-preview video::-internal-media-controls-download-button {
@@ -340,6 +340,10 @@ body {
     left: 0;
     right: 0;
     width: 100%;
+}
+
+.contidio-document-wrapper {
+    min-height: 400px;
 }
 
 .contidio-preview-wrapper {
