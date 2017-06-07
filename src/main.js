@@ -4,8 +4,10 @@ function ContidioWidget() {
     container: ".contidio-widget",
     itemClass: "contidio-item",
     translations: {
-      detailLink: "more"
+      detailLink: "more",
+      licenseButton: "License on Contidio"
     },
+    hideDetailButton: false,
     onListClick: null,
     onListClickTarget: "_blank",
     beforeRender: null,
