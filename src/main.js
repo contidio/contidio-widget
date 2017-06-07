@@ -92,7 +92,7 @@ function ContidioWidget() {
         options.afterRender(that.items);
       }
 
-      
+
       if (renderer.resize) {
 
         renderer.resize();

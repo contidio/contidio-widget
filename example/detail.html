@@ -21,7 +21,9 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
     var uuid = getParameterByName("cw-uuid") || "300004F1O";
-    var exampleUrl = "https://mdidx.contidio.com/api/v1/assets/"+uuid+"/anonymous/?flags=145340470544642&locale=en";
+    var type = getParameterByName("cw-type") || "asset";
+
+    var exampleUrl = "https://mdidx.contidio.com/api/v1/"+type+"s/"+uuid+"/anonymous/?flags=145340470544642&locale=en";
 </script>
 <!-- END: EXAMPLE HELPER CODE -->
 
