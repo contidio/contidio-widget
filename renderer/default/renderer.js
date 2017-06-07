@@ -15,6 +15,7 @@ function Renderer(widget, $) {
   this.renderListView = function (item) {
 
     var options = this.options;
+    var that = this;
 
     $item = $("<a target='"+options.onListClickTarget+"' "+"href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
 
@@ -39,7 +40,14 @@ function Renderer(widget, $) {
     }
 
     if (item.previewImage) {
-      $imagePositioner.append("<img class='contidio-item-image' alt='" + item.name + "' src='" + item.previewImage + "'/>");
+      var img = new Image();
+      img.onload = function () {
+        that.positionImage(img);
+      };
+      img.src = item.previewImage;
+      img.alt = item.name;
+      img.className = 'contidio-item-image';
+      $imagePositioner.append(img);
     }
 
     $imageContainer.append($imagePositioner);
@@ -182,11 +190,11 @@ function Renderer(widget, $) {
 
     for (var j = 0; j < $entries.length; j++) {
 
-      var $title = $($entries[j]).find(".contidio-item-name")[0];
+      var title = $($entries[j]).find(".contidio-item-name")[0];
 
-      $title.style.height = "auto";
+      title.style.height = "auto";
 
-      titleHeight = Math.max(titleHeight, $title.offsetHeight);
+      titleHeight = Math.max(titleHeight, title.offsetHeight);
 
       if ((j + 1) % itemsPerRow == 0) {
 
@@ -199,6 +207,11 @@ function Renderer(widget, $) {
 
         titleHeight = 0;
       }
+
+      var image = $($entries[j]).find(".contidio-item-image")[0];
+
+      this.positionImage(image);
+
     }
   };
 
@@ -209,5 +222,23 @@ function Renderer(widget, $) {
   this.getItemsPerRow = function () {
     return window.outerWidth > 897 ? 3 : window.outerWidth > 729 ? 2 : 1;
   };
+
+  this.positionImage = function(image) {
+
+    if(image.naturalWidth > image.naturalHeight) {
+      image.style.maxHeight = "150%";
+      image.style.maxWidth = "none";
+    } else {
+      image.style.maxHeight = "none";
+      image.style.maxWidth = "150%";
+    }
+
+    var width = image.clientWidth;
+    var height = image.clientHeight;
+
+    image.style.marginTop = "-"+(height/2)+"px";
+    image.style.marginLeft = "-"+(width/2)+"px";
+
+  }
 
 }

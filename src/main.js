@@ -92,9 +92,11 @@ function ContidioWidget() {
         options.afterRender(that.items);
       }
 
+      
       if (renderer.resize) {
 
         renderer.resize();
+
         that.addEvent(window, "resize", function () {
           renderer.resize();
         });
