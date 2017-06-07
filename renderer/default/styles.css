@@ -382,6 +382,7 @@ body {
     padding: 60px 0 30px 0;
 }
 
+.contidio-asset-name,
 .contidio-asset-story,
 .contidio-asset-description,
 .contidio-asset-tags {
@@ -417,7 +418,7 @@ body {
 
 .contidio-button-container {
     text-align: center;
-    padding: 20px 0;
+    padding-bottom: 50px;
 }
 
 .contidio-button {
