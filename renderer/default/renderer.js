@@ -237,12 +237,22 @@ function Renderer(widget, $) {
 
   this.positionImage = function(image) {
 
-    if(image.naturalWidth > image.naturalHeight) {
-      image.style.maxHeight = "150%";
-      image.style.maxWidth = "none";
-    } else {
-      image.style.maxHeight = "none";
-      image.style.maxWidth = "150%";
+
+
+    if(image.naturalWidth < image.naturalHeight) {
+      image.style.height = "auto";
+      image.style.width = "100%";
+    } else if(image.naturalWidth > image.naturalHeight) {
+
+      var calcHeight = 100;
+      var arDelta = 360 / 224 - image.naturalWidth / image.naturalHeight;
+
+      if(arDelta > 0){
+        calcHeight = 100 + 100 * arDelta;
+      }
+
+      image.style.width = "auto";
+      image.style.height = calcHeight+"%";
     }
 
     var width = image.clientWidth;
