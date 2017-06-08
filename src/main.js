@@ -11,7 +11,8 @@ function ContidioWidget() {
     onListClick: null,
     onListClickTarget: "_blank",
     beforeRender: null,
-    afterRender: null
+    afterRender: null,
+    url: "https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=145340470544642&startIndex=0&count=48&orderBy=2&orderDirection=2&recursive=1&types=1,2,3"
   };
 
   this.mergeOptions = function (obj1, obj2) {
@@ -56,7 +57,7 @@ function ContidioWidget() {
     }
 
     var options = this.options;
-    var renderer = new Renderer(this, $);
+    var renderer = new ContidioRenderer(this, $);
     var that = this;
 
     fetch(url, {
@@ -229,6 +230,8 @@ function ContidioWidget() {
     }
 
     item.previewImage = this.getBinarySrc(entity, previewBinaryPurpose, width);
+
+    console.log(item);
 
     return item;
   };

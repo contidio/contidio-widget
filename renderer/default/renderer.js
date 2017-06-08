@@ -1,8 +1,8 @@
 /** Contidio Widget: default renderer
- @param {Object} options
- @param $ DOMtastic, see https://domtastic.js.org/
+ @param {Object} widget
+ @param $ DOMtastic || jQuery, see https://domtastic.js.org/
  */
-function Renderer(widget, $) {
+function ContidioRenderer(widget, $) {
 
   this.widget = widget;
   this.options = (widget && widget.options) ? widget.options : {};
@@ -17,10 +17,10 @@ function Renderer(widget, $) {
     var options = this.options;
     var that = this;
 
-    $item = $("<a target='"+options.onListClickTarget+"' "+"href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
+    $item = $("<a target='" + options.onListClickTarget + "' " + "href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
 
-    if(typeof options.onListClick === "function"){
-      $item.on("click",options.onListClick.bind(this, item, widget));
+    if (typeof options.onListClick === "function") {
+      $item.on("click", options.onListClick.bind(this, item, widget));
     }
 
     $item.data("uuid", item.uuid);
@@ -55,7 +55,7 @@ function Renderer(widget, $) {
 
     $itemText = $("<div class='contidio-text-container'></div>");
 
-    if(item.category) {
+    if (item.category) {
       $itemText.append("<div class='contidio-item-category'>" + item.category + "</div>");
     }
 
@@ -63,14 +63,14 @@ function Renderer(widget, $) {
 
     $itemMeta = $("<div class='contidio-item-meta'></div>");
 
-    if(item.authorImage) {
-      $itemMeta.append("<span class='contidio-item-author-image'><img src='"+item.authorImage+"'/></span>");
+    if (item.authorImage) {
+      $itemMeta.append("<span class='contidio-item-author-image'><img src='" + item.authorImage + "'/></span>");
     }
-    if(item.author) {
-      $itemMeta.append("<span class='contidio-item-author-name'>"+item.author+"</span>");
+    if (item.author) {
+      $itemMeta.append("<span class='contidio-item-author-name'>" + item.author + "</span>");
     }
-    if(item.date) {
-      $itemMeta.append("<span class='contidio-item-date'>"+item.date+"</span>");
+    if (item.date) {
+      $itemMeta.append("<span class='contidio-item-date'>" + item.date + "</span>");
     }
 
     $itemText.append($itemMeta);
@@ -108,14 +108,14 @@ function Renderer(widget, $) {
 
         var documentImage = "<img src='" + (item.coverImage ? item.coverImage : item.previewImage) + "' />";
 
-        if(isStory && !item.cover && item.previewImage.indexOf("placeholder") > -1){
+        if (item.isStory && !item.cover && item.previewImage.indexOf("placeholder") > -1) {
           documentImage = "";
         }
 
-        $assetPreview.append("<div class='contidio-preview-wrapper contidio-document-wrapper'>"+documentImage+"</div>");
+        $assetPreview.append("<div class='contidio-preview-wrapper contidio-document-wrapper'>" + documentImage + "</div>");
 
-        if(item.isStory){
-          $assetPreview.append("<div class='contidio-story-title'><div class='contidio-center-wrapper'><div class='contidio-center-content'>"+item.name+"</div></div></div>");
+        if (item.isStory) {
+          $assetPreview.append("<div class='contidio-story-title'><div class='contidio-center-wrapper'><div class='contidio-center-content'>" + item.name + "</div></div></div>");
         }
       }
 
@@ -124,20 +124,20 @@ function Renderer(widget, $) {
     /* Asset Meta Data */
     var $assetMeta = $("<div class='contidio-asset-meta'></div>");
 
-    if(item.isStory){
+    if (item.isStory) {
       var $assetMetaContainer = $("<div class='contidio-container'></div>");
 
-      if(item.authorImage) {
-        $assetMetaContainer.append("<span class='contidio-item-author-image'><img src='"+item.authorImage+"'/></span>");
+      if (item.authorImage) {
+        $assetMetaContainer.append("<span class='contidio-item-author-image'><img src='" + item.authorImage + "'/></span>");
       }
-      if(item.author) {
-        $assetMetaContainer.append("<span class='contidio-item-author-name'>"+item.author+"</span>");
+      if (item.author) {
+        $assetMetaContainer.append("<span class='contidio-item-author-name'>" + item.author + "</span>");
       }
-      if(item.date) {
-        $assetMetaContainer.append("<span class='contidio-item-date'>"+item.date+"</span>");
+      if (item.date) {
+        $assetMetaContainer.append("<span class='contidio-item-date'>" + item.date + "</span>");
       }
-      if(item.category) {
-        $assetMetaContainer.append("<div class='contidio-item-category'>"+item.category+"</div>");
+      if (item.category) {
+        $assetMetaContainer.append("<div class='contidio-item-category'>" + item.category + "</div>");
       }
 
       $assetMeta.append($assetMetaContainer);
@@ -147,7 +147,7 @@ function Renderer(widget, $) {
     /* Asset Data */
     var $assetData = $("<div class='contidio-asset-data contidio-container'></div>");
 
-    if(!item.isStory){
+    if (!item.isStory) {
       $assetData.append("<div class='contidio-asset-name'>" + item.name + "</div>");
     }
 
@@ -171,11 +171,11 @@ function Renderer(widget, $) {
     }
 
     /* Richtext */
-    if(item.html){
+    if (item.html) {
 
       var that = this;
 
-      item.html.then(function(text){
+      item.html.then(function (text) {
 
         if (text.indexOf(that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER) == text.length - that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER.length) {
           text = text.replace(that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER, "");
@@ -187,7 +187,7 @@ function Renderer(widget, $) {
 
     /* License Button */
     var $detailButtonContainer = $("<div class='contidio-container contidio-button-container'></div>");
-    $detailButtonContainer.append("<a class='contidio-button' href='https://www.contidio.com/asset/"+item.uuid+"'><svg class='contidio-button-icon' version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='33px' height='33px' viewBox='0 0 33 33' enable-background='new 0 0 33 33' xml:space='preserve'><g><g><path fill='#FFFFFF' d='M16.501,29.751c-7.306,0-13.25-5.945-13.25-13.251c0-7.305,5.944-13.25,13.25-13.25 c3.154,0,6.053,1.11,8.331,2.958l2.307-2.306C24.263,1.471,20.551,0,16.501,0C7.403,0,0,7.402,0,16.5C0,25.6,7.403,33,16.501,33 c4.05,0,7.762-1.469,10.638-3.899l-2.307-2.307C22.554,28.641,19.655,29.751,16.501,29.751z'></path></g><g><path fill='#FFFFFF' d='M8.61,16.5c0,4.353,3.539,7.894,7.891,7.894c1.676,0,3.228-0.527,4.511-1.421l-2.364-2.361 c-0.642,0.337-1.372,0.53-2.147,0.53c-2.559,0-4.642-2.081-4.642-4.642c0-2.558,2.083-4.641,4.642-4.641 c0.775,0,1.505,0.194,2.147,0.532l2.364-2.362c-1.283-0.894-2.834-1.421-4.511-1.421C12.148,8.608,8.61,12.149,8.61,16.5z'></path></g><g><path fill='#FFFFFF' d='M30.068,7.127l-2.342,2.344c1.28,2.038,2.024,4.449,2.024,7.029c0,2.581-0.744,4.993-2.024,7.031 l2.342,2.344C31.917,23.212,33,19.981,33,16.5C33,13.02,31.917,9.789,30.068,7.127z'></path></g></g></svg>"+this.options.translations.licenseButton+"</a>");
+    $detailButtonContainer.append("<a class='contidio-button' href='https://www.contidio.com/asset/" + item.uuid + "'><svg class='contidio-button-icon' version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='33px' height='33px' viewBox='0 0 33 33' enable-background='new 0 0 33 33' xml:space='preserve'><g><g><path fill='#FFFFFF' d='M16.501,29.751c-7.306,0-13.25-5.945-13.25-13.251c0-7.305,5.944-13.25,13.25-13.25 c3.154,0,6.053,1.11,8.331,2.958l2.307-2.306C24.263,1.471,20.551,0,16.501,0C7.403,0,0,7.402,0,16.5C0,25.6,7.403,33,16.501,33 c4.05,0,7.762-1.469,10.638-3.899l-2.307-2.307C22.554,28.641,19.655,29.751,16.501,29.751z'></path></g><g><path fill='#FFFFFF' d='M8.61,16.5c0,4.353,3.539,7.894,7.891,7.894c1.676,0,3.228-0.527,4.511-1.421l-2.364-2.361 c-0.642,0.337-1.372,0.53-2.147,0.53c-2.559,0-4.642-2.081-4.642-4.642c0-2.558,2.083-4.641,4.642-4.641 c0.775,0,1.505,0.194,2.147,0.532l2.364-2.362c-1.283-0.894-2.834-1.421-4.511-1.421C12.148,8.608,8.61,12.149,8.61,16.5z'></path></g><g><path fill='#FFFFFF' d='M30.068,7.127l-2.342,2.344c1.28,2.038,2.024,4.449,2.024,7.029c0,2.581-0.744,4.993-2.024,7.031 l2.342,2.344C31.917,23.212,33,19.981,33,16.5C33,13.02,31.917,9.789,30.068,7.127z'></path></g></g></svg>" + this.options.translations.licenseButton + "</a>");
 
     /* Putting it all together */
     $detailView.append($assetPreview);
@@ -236,18 +236,20 @@ function Renderer(widget, $) {
   };
 
   /**
-   * Renderer specific helper function
+   * Renderer specific helper function to determine how many items should be displayed per row (responsive breakpoints)
    * @returns {number}
    */
   this.getItemsPerRow = function () {
     return window.outerWidth > 897 ? 3 : window.outerWidth > 729 ? 2 : 1;
   };
 
-  this.positionImage = function(image) {
+  /**
+   * Renderer specific helper function to position the image in the list view the best way possible.
+   * @param image
+   */
+  this.positionImage = function (image) {
 
-
-
-    if(image.naturalWidth < image.naturalHeight) {
+    if (image.naturalWidth < image.naturalHeight) {
       image.style.height = "auto";
       image.style.width = "100%";
     } else {
@@ -255,19 +257,19 @@ function Renderer(widget, $) {
       var calcHeight = 100;
       var arDelta = 360 / 224 - image.naturalWidth / image.naturalHeight;
 
-      if(arDelta > 0){
+      if (arDelta > 0) {
         calcHeight = 100 + 100 * arDelta;
       }
 
       image.style.width = "auto";
-      image.style.height = calcHeight+"%";
+      image.style.height = calcHeight + "%";
     }
 
     var width = image.clientWidth;
     var height = image.clientHeight;
 
-    image.style.marginTop = "-"+(height/2)+"px";
-    image.style.marginLeft = "-"+(width/2)+"px";
+    image.style.marginTop = "-" + (height / 2) + "px";
+    image.style.marginLeft = "-" + (width / 2) + "px";
 
   }
 
