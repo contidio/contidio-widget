@@ -123,7 +123,7 @@ the param _item_ is an Object containing all available data.
 
 ## FAQ
 
-**Q: Where to i get the `url` for the widget?**
+**Q: Where do i get the `url` for the widget?**
     
 **A:** We are working on a simple solution. In the meanwhile, look at the network panel of your browser console while on Contidio.
  
