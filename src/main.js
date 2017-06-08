@@ -231,8 +231,6 @@ function ContidioWidget() {
 
     item.previewImage = this.getBinarySrc(entity, previewBinaryPurpose, width);
 
-    console.log(item);
-
     return item;
   };
 

@@ -7,8 +7,18 @@ function ContidioRenderer(widget, $) {
   this.widget = widget;
   this.options = (widget && widget.options) ? widget.options : {};
 
+  this.pdfConfig = {
+    pdfDoc: null,
+    pageNum: 1,
+    pageRendering: false,
+    pageNumPending: null,
+    scale: 2,
+    canvas: null,
+    ctx: null
+  };
+
   /**
-   * used to render an item list view
+   * Used to render an item list view
    * @param item
    * @returns {*|jQuery|HTMLElement|string}
    */
@@ -92,6 +102,8 @@ function ContidioRenderer(widget, $) {
    */
   this.renderDetailView = function (item) {
 
+    var that = this;
+
     var $detailView = $("<div class='contidio-detail-view'></div>");
 
     var $assetPreview = $("<div class='contidio-asset-preview'></div>");
@@ -108,7 +120,7 @@ function ContidioRenderer(widget, $) {
 
         var documentImage = "<img src='" + (item.coverImage ? item.coverImage : item.previewImage) + "' />";
 
-        if (item.isStory && !item.cover && item.previewImage.indexOf("placeholder") > -1) {
+        if ((!item.story && item.pdfSrc) || (item.isStory && !item.cover && item.previewImage.indexOf("placeholder")) > -1) {
           documentImage = "";
         }
 
@@ -116,6 +128,43 @@ function ContidioRenderer(widget, $) {
 
         if (item.isStory) {
           $assetPreview.append("<div class='contidio-story-title'><div class='contidio-center-wrapper'><div class='contidio-center-content'>" + item.name + "</div></div></div>");
+        } else {
+
+          var $pdfControls = $("<div class='contidio-pdf-controls'></div>");
+          var $pdfPrev = $("<button class='contidio-pdf-prev'>&lt;</button>");
+          var $pdfPages = $("<span class='contidio-pdf-pages'></span>");
+          var $pdfNext = $("<button class='contidio-pdf-next'>&gt;</button>");
+
+
+          $pdfPrev.on("click", that.onPrevPage.bind(that));
+          $pdfNext.on("click", that.onNextPage.bind(that));
+
+          $pdfControls.append($pdfPrev);
+          $pdfControls.append($pdfPages);
+          $pdfControls.append($pdfNext);
+          $assetPreview.append($pdfControls);
+
+
+          var $canvas = $("<canvas></canvas>");
+          this.pdfConfig.canvas = $canvas[0];
+          this.pdfConfig.ctx = $canvas[0].getContext('2d');
+
+          this.require("//cdnjs.cloudflare.com/ajax/libs/pdf.js/1.6.471/pdf.combined.min.js", function () {
+            // The workerSrc property shall be specified.
+            PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+            // Asynchronous download of PDF
+            var loadingTask = PDFJS.getDocument(item.pdfSrc);
+            loadingTask.promise.then(function (pdfDoc_) {
+
+              that.pdfConfig.pdfDoc = pdfDoc_;
+              document.getElementsByClassName('contidio-pdf-pages')[0].textContent = that.pdfConfig.pageNum + "/" + that.pdfConfig.pdfDoc.numPages;
+              document.getElementsByClassName("contidio-document-wrapper")[0].appendChild(that.pdfConfig.canvas);
+
+              that.renderPage(that.pdfConfig.pageNum);
+
+            });
+          });
         }
       }
 
@@ -172,8 +221,6 @@ function ContidioRenderer(widget, $) {
 
     /* Richtext */
     if (item.html) {
-
-      var that = this;
 
       item.html.then(function (text) {
 
@@ -271,6 +318,92 @@ function ContidioRenderer(widget, $) {
     image.style.marginTop = "-" + (height / 2) + "px";
     image.style.marginLeft = "-" + (width / 2) + "px";
 
+  };
+
+  this.require = function (file, callback) {
+    var head = document.getElementsByTagName("head")[0];
+    var script = document.createElement('script');
+    script.src = file;
+    script.type = 'text/javascript';
+    //real browsers
+    script.onload = callback;
+    //Internet explorer
+    script.onreadystatechange = function () {
+      if (this.readyState == 'complete') {
+        callback();
+      }
+    };
+    head.appendChild(script);
+  };
+
+  /**
+   * Get page info from document, resize canvas accordingly, and render page.
+   * @param num Page number.
+   */
+  this.renderPage = function (num) {
+    var that = this;
+    that.pdfConfig.pageRendering = true;
+    // Using promise to fetch the page
+    that.pdfConfig.pdfDoc.getPage(num).then(function (page) {
+      var viewport = page.getViewport(that.pdfConfig.scale);
+      that.pdfConfig.canvas.height = viewport.height;
+      that.pdfConfig.canvas.width = viewport.width;
+
+      // Render PDF page into canvas context
+      var renderContext = {
+        canvasContext: that.pdfConfig.ctx,
+        viewport: viewport
+      };
+      var renderTask = page.render(renderContext);
+
+      // Wait for rendering to finish
+      renderTask.promise.then(function () {
+        that.pdfConfig.pageRendering = false;
+        if (that.pdfConfig.pageNumPending !== null) {
+          // New page rendering is pending
+          that.renderPage(that.pdfConfig.pageNumPending);
+          that.pdfConfig.pageNumPending = null;
+        }
+      });
+    });
+
+    // Update page counters
+    document.getElementsByClassName('contidio-pdf-pages')[0].textContent = that.pdfConfig.pageNum + "/" + that.pdfConfig.pdfDoc.numPages;
+  };
+
+  /**
+   * Displays previous page.
+   */
+  this.onPrevPage = function () {
+    if (this.pdfConfig.pageNum <= 1) {
+      return;
+    }
+    this.pdfConfig.pageNum--;
+    this.queueRenderPage(this.pdfConfig.pageNum);
+  };
+
+  /**
+   * Displays next page.
+   */
+  this.onNextPage = function () {
+    if (this.pdfConfig.pageNum >= this.pdfConfig.pdfDoc.numPages) {
+      return;
+    }
+    this.pdfConfig.pageNum++;
+    this.queueRenderPage(this.pdfConfig.pageNum);
+  };
+
+  /**
+   * If another page rendering in progress, waits until the rendering is
+   * finised. Otherwise, executes rendering immediately.
+   */
+  this.queueRenderPage = function (num) {
+    if (this.pdfConfig.pageRendering) {
+      this.pdfConfig.pageNumPending = num;
+    } else {
+      this.renderPage(num);
+    }
   }
+
 
 }

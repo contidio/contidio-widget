@@ -259,7 +259,8 @@ body {
 }
 
 .contidio-asset-preview img,
-.contidio-asset-preview video{
+.contidio-asset-preview video,
+.contidio-asset-preview canvas {
     max-width: 100%;
     margin-bottom: -9px;
 }
@@ -344,6 +345,16 @@ body {
 
 .contidio-document-wrapper {
     min-height: 400px;
+}
+
+.contidio-pdf-controls {
+    padding-top: 20px;
+}
+
+.contidio-pdf-controls .contidio-pdf-pages {
+    display: inline-block;
+    text-align: center;
+    padding: 0 10px;
 }
 
 .contidio-preview-wrapper {
