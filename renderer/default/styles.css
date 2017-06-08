@@ -258,7 +258,8 @@ body {
     position: relative;
 }
 
-.contidio-asset-preview img {
+.contidio-asset-preview img,
+.contidio-asset-preview video{
     max-width: 100%;
     margin-bottom: -9px;
 }
