@@ -180,12 +180,15 @@ body {
 
 .contidio-item .contidio-item-category {
     color: #004c78;
-    padding-bottom: 20px;
+}
+
+.contidio-item .contidio-item-category + .contidio-item-name {
+    padding-top: 10px;
 }
 
 .contidio-detail-view .contidio-item-category {
     float: right;
-    line-height: 40px;
+    line-height: 37px;
     font-style: normal;
 }
 
@@ -209,7 +212,7 @@ body {
 }
 
 .contidio-item-meta {
-    margin-top: 30px;
+    margin-top: 10px;
     position: relative;
     width: 100%;
     font-size: 76%;
@@ -217,6 +220,7 @@ body {
     font-style: italic;
     font-weight: 300;
     line-height: 40px;
+    min-height: 56px;
 }
 
 .contidio-item-meta .contidio-item-author-name {
@@ -250,6 +254,11 @@ body {
     padding-left: 8px;
 }
 
+.contidio-item-date:first-child {
+    padding-top: 16px;
+    display: block;
+}
+
 /** Detail View **/
 
 .contidio-asset-preview {
@@ -263,6 +272,7 @@ body {
 .contidio-asset-preview canvas {
     max-width: 100%;
     margin-bottom: -9px;
+    margin-top: 20px;
 }
 
 .contidio-asset-preview video::-internal-media-controls-download-button {
@@ -343,8 +353,12 @@ body {
     width: 100%;
 }
 
-.contidio-document-wrapper {
-    min-height: 400px;
+.contidio-document-wrapper:empty {
+    padding-bottom: 20%;
+}
+
+.contidio-document-wrapper img {
+    margin-top: 0;
 }
 
 .contidio-pdf-controls {
@@ -371,6 +385,7 @@ body {
     height: 100%;
     background-color: rgba(8, 28, 45, 0.6);
     font-size: 70px;
+    line-height: 70px;
     color: #fff;
 }
 
@@ -389,20 +404,8 @@ body {
     display: none;
 }
 
-.contidio-asset-meta .contidio-item-author-image{
-    margin-left: 6.25%;
-}
-
 .contidio-asset-data {
     padding: 60px 0 30px 0;
-}
-
-.contidio-asset-name,
-.contidio-asset-story,
-.contidio-asset-description,
-.contidio-asset-tags {
-    padding: 0 15px 0 6.25%;
-    box-sizing: border-box;
 }
 
 .contidio-asset-story p br:first-child:last-child {
@@ -417,6 +420,15 @@ body {
     text-align: center;
     padding: 0 0 15px 0;
     margin: 0;
+}
+
+.contidio-asset-story a {
+    color: #004c78;
+    text-decoration: none;
+}
+
+.contidio-asset-story a:hover {
+    text-decoration: underline;
 }
 
 .contidio-center-wrapper {
@@ -462,8 +474,20 @@ body {
     height: 40px;
 }
 
+.contidio-hint-message {
+    text-align: center;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    padding: 15px;
+}
+
 @media (max-width: 767px) {
     .contidio-asset-name {
+        font-size: 24pt;
+        line-height: 28pt;
+    }
+
+    .contidio-story-title {
         font-size: 24pt;
         line-height: 28pt;
     }
@@ -479,6 +503,12 @@ body {
         font-size: 20pt;
         line-height: 24pt;
     }
+
+    .contidio-story-title {
+        font-size: 16pt;
+        line-height: 20pt;
+    }
+
 
     .contidio-asset-description {
         font-size: 14pt;

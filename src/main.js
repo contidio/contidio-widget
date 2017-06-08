@@ -5,7 +5,8 @@ function ContidioWidget() {
     itemClass: "contidio-item",
     translations: {
       detailLink: "more",
-      licenseButton: "License on Contidio"
+      licenseButton: "License on Contidio",
+      endOfExcerpt: "(The preview of the story ends here. Please license this asset to download the full story)"
     },
     hideDetailButton: false,
     onListClick: null,
@@ -27,6 +28,9 @@ function ContidioWidget() {
   };
 
   this.options = (typeof contidioOptions !== "undefined") ? this.mergeOptions(this.defaultOptions, contidioOptions) : this.defaultOptions;
+
+  this.options.translations = (typeof contidioOptions !== "undefined" && contidioOptions.translations) ? this.mergeOptions(this.defaultOptions.translations, contidioOptions.translations) : this.defaultOptions.translations;
+
   this.items = [];
 
   this.init = function () {
@@ -223,6 +227,8 @@ function ContidioWidget() {
             previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_ADVANCED_LIST_PREVIEW_IMAGE;
             break;
           case "document":
+            item.isStory = entity.asset && entity.asset.type && entity.asset.type === 2;
+
             previewBinaryPurpose = (entity.asset && entity.asset.type === 2) ? this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW : this.CONSTANTS.BinaryPurpose.ASSET_ADVANCED_LIST_PREVIEW_IMAGE;
             break;
         }

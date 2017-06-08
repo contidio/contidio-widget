@@ -48,11 +48,15 @@
 
                 items[i].url = (items[i].type == "folder" ? "list_advanced" : "detail" )+".html?cw-uuid="+items[i].uuid+"&cw-type="+items[i].type;
 
-                items[i].category = "Trends & Markt";
-                if(!items[i].author){
-                    items[i].author = "John Doe";
+                if(items[i].isStory){
+                    items[i].category = "Trends & Markt";
+                    if(!items[i].author){
+                        items[i].author = "John Doe";
+                    }
+                    items[i].authorImage = "https://www.celum.com/cache/image/40x40-bb8b01f48c3d724fdc8416d6781cc7c7-1494836249.jpg";
                 }
-                items[i].authorImage = "https://www.celum.com/cache/image/40x40-bb8b01f48c3d724fdc8416d6781cc7c7-1494836249.jpg";
+
+
             }
 
         },

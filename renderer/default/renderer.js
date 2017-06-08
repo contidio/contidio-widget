@@ -65,18 +65,17 @@ function ContidioRenderer(widget, $) {
 
     $itemText = $("<div class='contidio-text-container'></div>");
 
-    if (item.category) {
-      $itemText.append("<div class='contidio-item-category'>" + item.category + "</div>");
-    }
+    $itemText.append("<div class='contidio-item-category'>" + (item.category ? item.category : "") + "</div>");
 
     $itemText.append("<div class='contidio-item-name'>" + item.name + "</div>");
 
     $itemMeta = $("<div class='contidio-item-meta'></div>");
 
-    if (item.authorImage) {
+    if (item.authorImage && item.isStory) {
       $itemMeta.append("<span class='contidio-item-author-image'><img src='" + item.authorImage + "'/></span>");
     }
-    if (item.author) {
+    console.log(item);
+    if (item.author && item.isStory) {
       $itemMeta.append("<span class='contidio-item-author-name'>" + item.author + "</span>");
     }
     if (item.date) {
@@ -120,7 +119,9 @@ function ContidioRenderer(widget, $) {
 
         var documentImage = "<img src='" + (item.coverImage ? item.coverImage : item.previewImage) + "' />";
 
-        if ((!item.story && item.pdfSrc) || (item.isStory && !item.cover && item.previewImage.indexOf("placeholder")) > -1) {
+        console.log(item.coverImage,item.previewImage);
+
+        if ((!item.story && item.pdfSrc) || (item.isStory && !item.coverImage && (item.previewImage.indexOf("placeholder")) > -1)) {
           documentImage = "";
         }
 
@@ -223,12 +224,20 @@ function ContidioRenderer(widget, $) {
     if (item.html) {
 
       item.html.then(function (text) {
-
+        var isCut = false;
         if (text.indexOf(that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER) == text.length - that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER.length) {
           text = text.replace(that.widget.CONSTANTS.EXCERPT_END_IDENTIFIER, "");
+          isCut = true;
         }
 
         $assetData.append("<div class='contidio-asset-story'>" + text + "</div>");
+
+        console.log(that.options);
+
+        if(!isCut){
+          $assetData.append("<div class='contidio-hint-message'>" + that.options.translations.endOfExcerpt + "</div>");
+        }
+
       });
     }
 
@@ -253,26 +262,16 @@ function ContidioRenderer(widget, $) {
     var $entries = $(this.options.container + " ." + this.options.itemClass);
 
     var itemsPerRow = this.getItemsPerRow();
-    var titleHeight = 0;
+
+    var rowItems = [];
 
     for (var j = 0; j < $entries.length; j++) {
 
-      var title = $($entries[j]).find(".contidio-item-name")[0];
+      rowItems.push($entries[j]);
 
-      title.style.height = "auto";
-
-      titleHeight = Math.max(titleHeight, title.offsetHeight);
-
-      if ((j + 1) % itemsPerRow == 0) {
-
-        for (var i = 0; i < itemsPerRow; i++) {
-
-          if (i + j < $entries.length) {
-            $($entries[j - i]).find(".contidio-item-name")[0].style.height = titleHeight + "px";
-          }
-        }
-
-        titleHeight = 0;
+      if(rowItems.length === itemsPerRow){
+        this.adjustRow(rowItems);
+        rowItems = [];
       }
 
       var image = $($entries[j]).find(".contidio-item-image")[0];
@@ -280,6 +279,35 @@ function ContidioRenderer(widget, $) {
       this.positionImage(image);
 
     }
+  };
+
+  /**
+   * Provided with a set of items to adjust varying heights
+   */
+  this.adjustRow = function(items) {
+
+    var attributesToAdjust = [".contidio-item-name",".contidio-item-category"];
+    var maxPerAttribute = new Array(attributesToAdjust.length);
+
+    for (var i = 0; i < items.length; i++) {
+      for (var j = 0; j < attributesToAdjust.length; j++) {
+        var element = $(items[i]).find(attributesToAdjust[j])[0];
+
+        //reset height to be measured correctly
+        element.style.height = "auto";
+
+        var currentAttributeMax = maxPerAttribute[j] || 0;
+
+        maxPerAttribute[j] = Math.max(currentAttributeMax, element.clientHeight);
+      }
+    }
+
+    for (var k = 0; k < items.length; k++) {
+      for (var l = 0; l < attributesToAdjust.length; l++) {
+        $(items[k]).find(attributesToAdjust[l])[0].style.height = maxPerAttribute[l] + "px";
+      }
+    }
+
   };
 
   /**
