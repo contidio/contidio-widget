@@ -27,9 +27,13 @@ function ContidioRenderer(widget, $) {
     var options = this.options;
     var that = this;
 
+    if(item.restricted) {
+      item.url = "https://www.contidio.com/"+item.type+"/"+item.uuid;
+    }
+
     $item = $("<a target='" + options.onListClickTarget + "' " + "href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
 
-    if (typeof options.onListClick === "function") {
+    if (typeof options.onListClick === "function" && !item.restricted) {
       $item.on("click", options.onListClick.bind(this, item, widget));
     }
 

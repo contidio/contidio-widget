@@ -140,6 +140,10 @@ function ContidioWidget() {
       url: "https://www.contidio.com/" + this.getType(entity.type) + "/" + entity.uuid
     };
 
+    if(typeof entity.isUnlocked !== "undefined" && entity.isUnlocked === false){
+      item.restricted = true;
+    }
+
     if (entity.workingSetBinaryType) {
       item.binaryType = this.getBinaryType(entity.workingSetBinaryType);
     }

@@ -26,7 +26,7 @@
     var uuid = getParameterByName("cw-uuid") || false;
     var type = getParameterByName("cw-type") || false;
 
-    var exampleUrl = (uuid && type) ? "https://mdidx.contidio.com/api/v1/"+type+"s/"+uuid+(type == "folder" ? "/childs" : "")+"/anonymous/?flags=145340470544642&locale=en" : "https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=145340470544642&startIndex=0&count=48&orderBy=2&orderDirection=2&recursive=1&types=1,2,3";
+    var exampleUrl = (uuid && type) ? "https://mdidx.contidio.com/api/v1/"+type+"s/"+uuid+(type == "asset" ? "" : "/childs")+"/anonymous/?flags=145340470544642&locale=en" : "https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=145340470544642&startIndex=0&count=48&orderBy=2&orderDirection=2&recursive=1&types=1,2,3";
 </script>
 <!-- END: EXAMPLE HELPER CODE -->
 
@@ -46,7 +46,7 @@
 
             for(var i = 0; i < items.length; i++){
 
-                items[i].url = (items[i].type == "folder" ? "list_advanced" : "detail" )+".html?cw-uuid="+items[i].uuid+"&cw-type="+items[i].type;
+                items[i].url = (items[i].type == "asset" ? "detail" : "list_advanced" )+".html?cw-uuid="+items[i].uuid+"&cw-type="+items[i].type;
 
                 if(items[i].isStory){
                     items[i].category = "Trends & Markt";
