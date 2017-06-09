@@ -141,3 +141,14 @@ the param _item_ is an Object containing all available data.
  ``` 
  https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=145340470544642&startIndex=0&count=20&orderBy=2&orderDirection=2&recursive=1&locale=en&types=1&source=1
  ```
+
+## How to contribute
+ 
+We decided to run the widget open source on GitHub to reach out to the community for feedback and growth. Here is how you can contribute:
+
+* Bug reports & fixes
+* Feature requests
+* Code improvements
+* Provide examples
+* __Commit your own renderer__
+
