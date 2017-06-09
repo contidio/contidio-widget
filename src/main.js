@@ -64,6 +64,8 @@ function ContidioWidget() {
     var renderer = new ContidioRenderer(this, $);
     var that = this;
 
+    $(options.container).append("<div class='contidio-loader'><div class='contidio-loader-bounce'></div><div class='contidio-loader-bounce'></div> </div>");
+
     fetch(url, {
       headers: {
         'x-contidio-sdk': '1.0-JS'
