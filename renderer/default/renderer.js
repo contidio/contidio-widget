@@ -74,7 +74,6 @@ function ContidioRenderer(widget, $) {
     if (item.authorImage && item.isStory) {
       $itemMeta.append("<span class='contidio-item-author-image'><img src='" + item.authorImage + "'/></span>");
     }
-    console.log(item);
     if (item.author && item.isStory) {
       $itemMeta.append("<span class='contidio-item-author-name'>" + item.author + "</span>");
     }
@@ -118,8 +117,6 @@ function ContidioRenderer(widget, $) {
       } else if (item.binaryType == "document") {
 
         var documentImage = "<img src='" + (item.coverImage ? item.coverImage : item.previewImage) + "' />";
-
-        console.log(item.coverImage,item.previewImage);
 
         if ((!item.story && item.pdfSrc) || (item.isStory && !item.coverImage && (item.previewImage.indexOf("placeholder")) > -1)) {
           documentImage = "";
@@ -231,8 +228,6 @@ function ContidioRenderer(widget, $) {
         }
 
         $assetData.append("<div class='contidio-asset-story'>" + text + "</div>");
-
-        console.log(that.options);
 
         if(isCut){
           $assetData.append("<div class='contidio-hint-message'>" + that.options.translations.endOfExcerpt + "</div>");
