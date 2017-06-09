@@ -234,7 +234,7 @@ function ContidioRenderer(widget, $) {
 
         console.log(that.options);
 
-        if(!isCut){
+        if(isCut){
           $assetData.append("<div class='contidio-hint-message'>" + that.options.translations.endOfExcerpt + "</div>");
         }
 
