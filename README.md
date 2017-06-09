@@ -152,3 +152,7 @@ We decided to run the widget open source on GitHub to reach out to the community
 * Provide examples
 * __Commit your own renderer__
 
+
+## License
+
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
