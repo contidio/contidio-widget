@@ -112,6 +112,13 @@ function ContidioWidget() {
 
       }
 
+    }).catch(function (error) {
+
+      var $error = $("<div class='contidio-error contidio-container'>An error occurred while trying to fetch the required data.</div>");
+
+      $(options.container)[0].innerHTML = "";
+      $(options.container).html("").append($error);
+
     });
   };
 
