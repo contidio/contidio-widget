@@ -1,6 +1,6 @@
 function ContidioWidget() {
 
-  this.defaultOptions = {
+  var defaultOptions = {
     container: ".contidio-widget",
     itemClass: "contidio-item",
     translations: {
@@ -16,6 +16,22 @@ function ContidioWidget() {
     url: "https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=145340470544642&startIndex=0&count=48&orderBy=2&orderDirection=2&recursive=1&types=1,2,3"
   };
 
+  var Promise = require('promise-polyfill');
+
+  require('whatwg-fetch');
+
+  if (!window.Promise) {
+    window.Promise = Promise;
+  }
+
+  var $ = (typeof jQuery === 'undefined') ? require('domtastic') : jQuery;
+
+  this.items = [];
+
+  this.stringNullOrEmpty = function (str) {
+    return (!str || /^\s*$/.test(str));
+  };
+
   this.mergeOptions = function (obj1, obj2) {
     var obj3 = {};
     for (var attrname in obj1) {
@@ -27,38 +43,42 @@ function ContidioWidget() {
     return obj3;
   };
 
-  this.options = (typeof contidioOptions !== "undefined") ? this.mergeOptions(this.defaultOptions, contidioOptions) : this.defaultOptions;
-
-  this.options.translations = (typeof contidioOptions !== "undefined" && contidioOptions.translations) ? this.mergeOptions(this.defaultOptions.translations, contidioOptions.translations) : this.defaultOptions.translations;
-
-  this.items = [];
-
   this.init = function () {
 
-    var Promise = require('promise-polyfill');
+    this.options = this.mergeOptions(defaultOptions, contidioOptions || {});
+    this.options.translations = this.mergeOptions(defaultOptions.translations, contidioOptions ? contidioOptions.translations : {});
 
-    require('whatwg-fetch');
-
-    if (!window.Promise) {
-      window.Promise = Promise;
+    if ($(this.options.container).length === 0) {
+      return this.throwError('The container defined for the contidio widget was not found');
     }
 
-    var url = this.options.url ? this.options.url : '';
+    if (typeof ContidioRenderer === 'undefined') {
+      return this.throwError('No ContidioRenderer found');
+    }
 
-    this.fetchUrl(url);
+    if (!this.stringNullOrEmpty(this.options.url)) {
+      this.fetchUrl(this.options.url);
+    }
+
+  };
+
+  this.throwError = function (message) {
+
+    console.error(message);
+
+    if ($(this.options.container).length > 0) {
+
+      var $error = $("<div class='contidio-error contidio-container'>" + message + "</div>");
+
+      $(this.options.container)[0].innerHTML = "";
+      $(this.options.container).html("").append($error);
+    }
 
   };
 
   this.fetchUrl = function (url) {
 
-    var $;
     this.items = [];
-
-    if (typeof jQuery === 'undefined') {
-      $ = require('domtastic');
-    } else {
-      $ = jQuery;
-    }
 
     var options = this.options;
     var renderer = new ContidioRenderer(this, $);
@@ -100,7 +120,6 @@ function ContidioWidget() {
       if (typeof options.afterRender === "function") {
         options.afterRender(that.items);
       }
-
 
       if (renderer.resize) {
 
@@ -147,7 +166,7 @@ function ContidioWidget() {
       url: "https://www.contidio.com/" + this.getType(entity.type) + "/" + entity.uuid
     };
 
-    if(typeof entity.isUnlocked !== "undefined" && entity.isUnlocked === false){
+    if (typeof entity.isUnlocked !== "undefined" && entity.isUnlocked === false) {
       item.restricted = true;
     }
 
@@ -173,7 +192,7 @@ function ContidioWidget() {
     var previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW;
 
     if (isDetail) {
-      previewBinaryPurpose = item.type == "folder" ? this.CONSTANTS.BinaryPurpose.FOLDER_LIST_PREVIEW : this.CONSTANTS.BinaryPurpose.ASSET_PREVIEW;
+      previewBinaryPurpose = item.type === "folder" ? this.CONSTANTS.BinaryPurpose.FOLDER_LIST_PREVIEW : this.CONSTANTS.BinaryPurpose.ASSET_PREVIEW;
 
       if (item.binaryType) {
         switch (item.binaryType) {
@@ -223,7 +242,7 @@ function ContidioWidget() {
         }
       }
     } else {
-      previewBinaryPurpose = item.type == "folder" ? this.CONSTANTS.BinaryPurpose.FOLDER_LIST_PREVIEW : this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW;
+      previewBinaryPurpose = item.type === "folder" ? this.CONSTANTS.BinaryPurpose.FOLDER_LIST_PREVIEW : this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW;
 
       switch (item.type) {
         case "brand":
@@ -331,7 +350,7 @@ function ContidioWidget() {
   };
 
   this.addEvent = function (object, type, callback) {
-    if (object == null || typeof(object) == 'undefined') return;
+    if (object === null || typeof(object) === 'undefined') return;
     if (object.addEventListener) {
       object.addEventListener(type, callback, false);
     } else if (object.attachEvent) {
@@ -342,48 +361,47 @@ function ContidioWidget() {
   };
 
   this.CONSTANTS = {
-    EXCERPT_END_IDENTIFIER : "--SNIP--",
-    BinaryPurpose : {
-      BRAND_LOGO : 100,
-      BRAND_ASSET : 150,
-      BRAND_BACKGROUND : 200,
-      BRAND_BACKGROUND_TALL : 250,
-      BRAND_WATERMARK : 300,
-      FOLDER_ASSET : 1000,
-      FOLDER_BACKGROUND : 1100,
-      FOLDER_BACKGROUND_TALL : 1150,
-      FOLDER_LIST_PREVIEW : 1200,
-      JOBS_ASSET : 1500,
-      JOBS_BACKGROUND : 1600,
-      JOBS_BACKGROUND_TALL : 1650,
-      JOBS_LIST_PREVIEW : 1700,
-      JOB_ASSET : 2000,
-      JOB_BACKGROUND : 2100,
-      JOB_BACKGROUND_TALL : 2150,
-      JOB_LIST_PREVIEW : 2200,
-      PROJECT_ASSET : 3000,
-      PROJECT_BACKGROUND : 3100,
-      PROJECT_BACKGROUND_TALL : 3150,
-      PROJECT_LIST_PREVIEW : 3200,
-      ASSET_ASSET : 10000,
-      ASSET_BASE : 10001,
-      ASSET_LIST_PREVIEW : 19000,
-      ASSET_PREVIEW : 19001,
-      ASSET_ADVANCED_LIST_PREVIEW_IMAGE : 19002,
-      ASSET_ADVANCED_LIST_PREVIEW : 19003,
-      ASSET_ADVANCED_PREVIEW_IMAGE : 19004,
-      ASSET_ADVANCED_PREVIEW : 19005,
-      ASSET_COVER : 19006,
-      ASSET_BACKGROUND_ASSET : 19007,
-      ASSET_BACKGROUND : 19008,
-      ASSET_BACKGROUND_TALL : 19009,
-      ASSET_HEADER : 19010,
-      ASSET_SPLITVIEW_LIST_PREVIEW : 19011
+    EXCERPT_END_IDENTIFIER: "--SNIP--",
+    BinaryPurpose: {
+      BRAND_LOGO: 100,
+      BRAND_ASSET: 150,
+      BRAND_BACKGROUND: 200,
+      BRAND_BACKGROUND_TALL: 250,
+      BRAND_WATERMARK: 300,
+      FOLDER_ASSET: 1000,
+      FOLDER_BACKGROUND: 1100,
+      FOLDER_BACKGROUND_TALL: 1150,
+      FOLDER_LIST_PREVIEW: 1200,
+      JOBS_ASSET: 1500,
+      JOBS_BACKGROUND: 1600,
+      JOBS_BACKGROUND_TALL: 1650,
+      JOBS_LIST_PREVIEW: 1700,
+      JOB_ASSET: 2000,
+      JOB_BACKGROUND: 2100,
+      JOB_BACKGROUND_TALL: 2150,
+      JOB_LIST_PREVIEW: 2200,
+      PROJECT_ASSET: 3000,
+      PROJECT_BACKGROUND: 3100,
+      PROJECT_BACKGROUND_TALL: 3150,
+      PROJECT_LIST_PREVIEW: 3200,
+      ASSET_ASSET: 10000,
+      ASSET_BASE: 10001,
+      ASSET_LIST_PREVIEW: 19000,
+      ASSET_PREVIEW: 19001,
+      ASSET_ADVANCED_LIST_PREVIEW_IMAGE: 19002,
+      ASSET_ADVANCED_LIST_PREVIEW: 19003,
+      ASSET_ADVANCED_PREVIEW_IMAGE: 19004,
+      ASSET_ADVANCED_PREVIEW: 19005,
+      ASSET_COVER: 19006,
+      ASSET_BACKGROUND_ASSET: 19007,
+      ASSET_BACKGROUND: 19008,
+      ASSET_BACKGROUND_TALL: 19009,
+      ASSET_HEADER: 19010,
+      ASSET_SPLITVIEW_LIST_PREVIEW: 19011
     }
   };
 
 }
-
 
 var cw = new ContidioWidget();
 
