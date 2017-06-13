@@ -7,7 +7,9 @@ function ContidioWidget() {
       detailLink: "more",
       licenseButton: "License on Contidio",
       endOfExcerpt: "(The preview of the story ends here. Please license this asset to download the full story)",
-      fetchError: "An error occurred while trying to fetch the required data."
+      fetchError: "An error occurred while trying to fetch the required data.",
+      noContainerError: "The container defined for the contidio widget was not found",
+      noRendererError: "No ContidioRenderer found"
     },
     hideDetailButton: false,
     onListClick: null,
@@ -49,12 +51,14 @@ function ContidioWidget() {
     this.options = this.mergeOptions(defaultOptions, contidioOptions || {});
     this.options.translations = this.mergeOptions(defaultOptions.translations, contidioOptions ? contidioOptions.translations : {});
 
-    if ($(this.options.container).length === 0) {
-      return this.throwError('The container defined for the contidio widget was not found');
+    if (typeof ContidioRenderer === 'undefined') {
+      return this.throwError(this.options.translations.noRendererError);
+    }else{
+      this.renderer = new ContidioRenderer(this, $);
     }
 
-    if (typeof ContidioRenderer === 'undefined') {
-      return this.throwError('No ContidioRenderer found');
+    if ($(this.options.container).length === 0) {
+      return this.throwError(this.options.translations.noContainerError);
     }
 
     if (!this.stringNullOrEmpty(this.options.url)) {
@@ -67,12 +71,9 @@ function ContidioWidget() {
 
     console.error(message);
 
-    if ($(this.options.container).length > 0) {
-
-      var $error = $("<div class='contidio-error contidio-container'>" + message + "</div>");
-
-      $(this.options.container)[0].innerHTML = "";
-      $(this.options.container).html("").append($error);
+    if(this.renderer && this.options.container){
+      $(options.container)[0].innerHTML = "";
+      $(options.container).append(renderer.renderError(error));
     }
 
   };
@@ -82,10 +83,12 @@ function ContidioWidget() {
     this.items = [];
 
     var options = this.options;
-    var renderer = new ContidioRenderer(this, $);
+    var renderer = this.renderer;
     var that = this;
 
-    $(options.container).append("<div class='contidio-loader'><div class='contidio-loader-bounce'></div><div class='contidio-loader-bounce'></div> </div>");
+    if(renderer.renderLoader){
+      $(options.container).append(renderer.renderLoader());
+    }
 
     fetch(url, {
       headers: {
@@ -101,22 +104,12 @@ function ContidioWidget() {
         options.beforeRender(that.items);
       }
 
+      $(options.container)[0].innerHTML = "";
+
       if (json.entity) {
-
-        var $itemList = $("<div class='contidio-item-list contidio-container'></div>");
-
-        for (var i = 0; i < that.items.length; i++) {
-          $itemList.append(renderer.renderListView(that.items[i]));
-        }
-
-        $(options.container)[0].innerHTML = "";
-        $(options.container).append($itemList);
-
+        $(options.container).append(renderer.renderListView(that.items));
       } else {
-
-        $(options.container)[0].innerHTML = "";
         $(options.container).append(renderer.renderDetailView(that.items[0]));
-
       }
 
       if (typeof options.afterRender === "function") {
@@ -135,8 +128,7 @@ function ContidioWidget() {
 
     }).catch(function (error) {
 
-      $(options.container)[0].innerHTML = "";
-      $(options.container).append(renderer.renderError(error));
+      that.throwError(error);
 
     });
   };

@@ -19,81 +19,91 @@ function ContidioRenderer(widget, $) {
 
   /**
    * Used to render an item list view
-   * @param item
+   * @param items
    * @returns {*|jQuery|HTMLElement|string}
    */
-  this.renderListView = function (item) {
+  this.renderListView = function (items) {
 
     var options = this.options;
     var that = this;
 
-    if(item.restricted) {
-      item.url = "https://www.contidio.com/"+item.type+"/"+item.uuid;
-    }
+    var $itemList = $("<div class='contidio-item-list contidio-container'></div>");
 
-    $item = $("<a target='" + options.onListClickTarget + "' " + "href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
+    for(var i = 0; i < items.length; i++){
+      var item = items[i];
 
-    if (typeof options.onListClick === "function" && !item.restricted) {
-      $item.on("click", options.onListClick.bind(this, item, widget));
-    }
-
-    $item.data("uuid", item.uuid);
-
-    $itemInner = $("<div class='contidio-item-inner'></div>");
-
-    $imageContainer = $("<div class='contidio-image-container'></div>");
-
-    $imagePositioner = $("<div class='contidio-image-positioner'></div>");
-
-    if (item.binaryType) {
-      if (item.binaryType == "audio") {
-        $imagePositioner.append("<i class='contidio-icon contidio-icon-audio'>&#9836;</i>");
-      } else if (item.binaryType == "video") {
-        $imagePositioner.append("<i class='contidio-icon contidio-icon-video'>&#9655;</i>");
+      if(item.restricted) {
+        item.url = "https://www.contidio.com/"+item.type+"/"+item.uuid;
       }
+
+      var $item = $("<a target='" + options.onListClickTarget + "' " + "href='" + item.url + "' class='" + options.itemClass + " " + item.type + "'></a>");
+
+      if (typeof options.onListClick === "function" && !item.restricted) {
+        $item.on("click", options.onListClick.bind(this, item, widget));
+      }
+
+      $item.data("uuid", item.uuid);
+
+      var $itemInner = $("<div class='contidio-item-inner'></div>");
+
+      var $imageContainer = $("<div class='contidio-image-container'></div>");
+
+      var $imagePositioner = $("<div class='contidio-image-positioner'></div>");
+
+      if (item.binaryType) {
+        if (item.binaryType == "audio") {
+          $imagePositioner.append("<i class='contidio-icon contidio-icon-audio'>&#9836;</i>");
+        } else if (item.binaryType == "video") {
+          $imagePositioner.append("<i class='contidio-icon contidio-icon-video'>&#9655;</i>");
+        }
+      }
+
+      if (item.previewImage) {
+        var img = new Image();
+        img.onload = function () {
+          that.positionImage(this);
+        };
+        img.src = item.previewImage;
+        img.alt = item.name;
+        img.className = 'contidio-item-image';
+        $imagePositioner.append(img);
+      }
+
+      $imageContainer.append($imagePositioner);
+      $itemInner.append($imageContainer);
+
+      var $itemText = $("<div class='contidio-text-container'></div>");
+
+      $itemText.append("<div class='contidio-item-category'>" + (item.category ? item.category : "") + "</div>");
+
+      $itemText.append("<div class='contidio-item-name'>" + item.name + "</div>");
+
+      var $itemMeta = $("<div class='contidio-item-meta'></div>");
+
+      if (item.authorImage && item.isStory) {
+        $itemMeta.append("<span class='contidio-item-author-image'><img src='" + item.authorImage + "'/></span>");
+      }
+      if (item.author && item.isStory) {
+        $itemMeta.append("<span class='contidio-item-author-name'>" + item.author + "</span>");
+      }
+      if (item.date) {
+        $itemMeta.append("<span class='contidio-item-date'>" + item.date + "</span>");
+      }
+
+      $itemText.append($itemMeta);
+
+      $itemText.append("<div class='contidio-detail-link'>" + options.translations.detailLink + "</div>");
+
+      $itemInner.append($itemText);
+
+      $item.append($itemInner);
+
+      $itemList.append($item);
+
+
     }
 
-    if (item.previewImage) {
-      var img = new Image();
-      img.onload = function () {
-        that.positionImage(img);
-      };
-      img.src = item.previewImage;
-      img.alt = item.name;
-      img.className = 'contidio-item-image';
-      $imagePositioner.append(img);
-    }
-
-    $imageContainer.append($imagePositioner);
-    $itemInner.append($imageContainer);
-
-    $itemText = $("<div class='contidio-text-container'></div>");
-
-    $itemText.append("<div class='contidio-item-category'>" + (item.category ? item.category : "") + "</div>");
-
-    $itemText.append("<div class='contidio-item-name'>" + item.name + "</div>");
-
-    $itemMeta = $("<div class='contidio-item-meta'></div>");
-
-    if (item.authorImage && item.isStory) {
-      $itemMeta.append("<span class='contidio-item-author-image'><img src='" + item.authorImage + "'/></span>");
-    }
-    if (item.author && item.isStory) {
-      $itemMeta.append("<span class='contidio-item-author-name'>" + item.author + "</span>");
-    }
-    if (item.date) {
-      $itemMeta.append("<span class='contidio-item-date'>" + item.date + "</span>");
-    }
-
-    $itemText.append($itemMeta);
-
-    $itemText.append("<div class='contidio-detail-link'>" + options.translations.detailLink + "</div>");
-
-    $itemInner.append($itemText);
-
-    $item.append($itemInner);
-
-    return ($item);
+    return ($itemList);
 
   };
 
@@ -260,6 +270,14 @@ function ContidioRenderer(widget, $) {
    */
   this.renderError = function (error) {
     return $("<div class='contidio-hint-message contidio-container'>"+this.options.translations.fetchError+"</div>");
+  };
+
+  /**
+   * Used for displaying the loading animation (optional)
+   * @returns {*|jQuery|HTMLElement|string}
+   */
+  this.renderLoader = function() {
+    return $("<div class='contidio-loader'><div class='contidio-loader-bounce'></div><div class='contidio-loader-bounce'></div></div>");
   };
 
   /**

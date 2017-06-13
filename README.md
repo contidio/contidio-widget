@@ -88,6 +88,9 @@ Every text that originates from the widget itself can be translated (or changed,
 | `licenseButton` | "License on Contidio" | The button text for the detail view, which takes the user to Contidio |
 | `endOfExcerpt` | "(The preview of the story ends here. Please license this asset to download the full story)" | Stories can be limited to an excerpt. If that's the case, this text will be shown to inform the user that there is more available if licensed |
 | `fetchError` | "An error occurred while trying to fetch the required data." | Message displayed if data could not be loaded correctly
+| `noContainerError` | "The container defined for the contidio widget was not found" | Defining a container for the widget is mandatory. If that is not the case, this error will be thrown. 
+| `noRendererError` | "No ContidioRenderer found." | If no renderer by the name of ContidioRenderer is defined, this error will be thrown.
+
 
 ## Renderer
 
@@ -101,6 +104,8 @@ You can either build it from scratch or adapt the default renderer for your need
 <!-- END: Contidio renderer -->
 ```
 
+#### Renderer Structure
+
 A Contidio Widget Renderer consists of two files, one .js and one .css file. The JavaScript part is a function that must be named _ContidioRenderer_, with three child-functions called _renderListView_, _renderDetailView_ and _renderError_.
 
 ```
@@ -110,9 +115,10 @@ function ContidioRenderer(widget, $) {...}
 The param _widget_ is the entire widget instance, including options and constants.
 The param _$_ is either jQuery (if already available in your site), or the much tinier DOMtastic (with similar API, see https://domtastic.js.org/)
 
+#### Renderer Functions
 
 ```
-this.renderListView(item) {...}
+this.renderListView(items) {...}
 ```
 
 ```
@@ -123,7 +129,19 @@ this.renderDetailView(item) {...}
 this.renderError(error) {...}
 ```
 
-the param _item_ is an Object containing all available data.
+the param `item` is an Object containing all available data while `items` is an Array of _item_ objects.
+
+#### Optional Renderer Functions
+
+Apart from all the Helper Functions you may need to achieve your presentation, the following renderer functions are being called from within the widget:
+
+```
+this.renderLoader() {...}
+```
+
+```
+this.resize(item) {...}
+```
 
 
 ## FAQ
@@ -155,6 +173,7 @@ We decided to run the widget open source on GitHub to reach out to the community
 * Feature requests
 * Code improvements
 * Provide examples
+* Translations
 * __Commit your own renderer__
 
 
