@@ -87,6 +87,7 @@ Every text that originates from the widget itself can be translated (or changed,
 | `detailLink` | "more" | Used in the list view as a call-to-action link |
 | `licenseButton` | "License on Contidio" | The button text for the detail view, which takes the user to Contidio |
 | `endOfExcerpt` | "(The preview of the story ends here. Please license this asset to download the full story)" | Stories can be limited to an excerpt. If that's the case, this text will be shown to inform the user that there is more available if licensed |
+| `fetchError` | "An error occurred while trying to fetch the required data." | Message displayed if data could not be loaded correctly
 
 ## Renderer
 
@@ -100,7 +101,7 @@ You can either build it from scratch or adapt the default renderer for your need
 <!-- END: Contidio renderer -->
 ```
 
-A Contidio Widget Renderer consists of two files, one .js and one .css file. The JavaScript part is a function that must be named _ContidioRenderer_, with two child-functions called _renderListView_ and _renderDetailView_.
+A Contidio Widget Renderer consists of two files, one .js and one .css file. The JavaScript part is a function that must be named _ContidioRenderer_, with three child-functions called _renderListView_, _renderDetailView_ and _renderError_.
 
 ```
 function ContidioRenderer(widget, $) {...}
@@ -116,6 +117,10 @@ this.renderListView(item) {...}
 
 ```
 this.renderDetailView(item) {...}
+```
+
+```
+this.renderError(error) {...}
 ```
 
 the param _item_ is an Object containing all available data.

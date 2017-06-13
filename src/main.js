@@ -6,7 +6,8 @@ function ContidioWidget() {
     translations: {
       detailLink: "more",
       licenseButton: "License on Contidio",
-      endOfExcerpt: "(The preview of the story ends here. Please license this asset to download the full story)"
+      endOfExcerpt: "(The preview of the story ends here. Please license this asset to download the full story)",
+      fetchError: "An error occurred while trying to fetch the required data."
     },
     hideDetailButton: false,
     onListClick: null,
@@ -109,11 +110,12 @@ function ContidioWidget() {
         }
 
         $(options.container)[0].innerHTML = "";
-        $(options.container).html("").append($itemList);
+        $(options.container).append($itemList);
 
       } else {
 
-        $(options.container).html("").append(renderer.renderDetailView(that.items[0]));
+        $(options.container)[0].innerHTML = "";
+        $(options.container).append(renderer.renderDetailView(that.items[0]));
 
       }
 
@@ -133,10 +135,8 @@ function ContidioWidget() {
 
     }).catch(function (error) {
 
-      var $error = $("<div class='contidio-error contidio-container'>An error occurred while trying to fetch the required data.</div>");
-
       $(options.container)[0].innerHTML = "";
-      $(options.container).html("").append($error);
+      $(options.container).append(renderer.renderError(error));
 
     });
   };

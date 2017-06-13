@@ -254,6 +254,15 @@ function ContidioRenderer(widget, $) {
   };
 
   /**
+   * Used for displaying errors
+   * @param error
+   * @returns {*|jQuery|HTMLElement|string}
+   */
+  this.renderError = function (error) {
+    return $("<div class='contidio-hint-message contidio-container'>"+this.options.translations.fetchError+"</div>");
+  };
+
+  /**
    * Will be called on window resize (optional)
    */
   this.resize = function () {
