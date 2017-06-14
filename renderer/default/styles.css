@@ -461,17 +461,19 @@ body {
 }
 .contidio-button:hover {
     background-color: #61c2d0;
+    color: #fff;
 }
 
 .contidio-button-icon {
     float: left;
     margin-right: 10px;
     position: relative;
-    width: 20px;
+    width: 30px;
     top: 0;
     border-right: 1px solid #fff;
     padding-right: 10px;
     height: 40px;
+    box-sizing: border-box;
 }
 
 .contidio-hint-message {
