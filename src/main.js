@@ -156,9 +156,12 @@ function ContidioWidget() {
 		"'": '&#039;'
 	  };
 
-	  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+	  if (text)
+		return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+	
+	  return text;
   }
-}
+  
   this.getItemData = function (entity, isDetail) {
 
     var item = {
