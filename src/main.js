@@ -92,7 +92,7 @@ function ContidioWidget() {
 
     fetch(url, {
       headers: {
-        'x-contidio-sdk': '1.0-JS'
+        'x-contidio-sdk': '1.0-JS-W'
       }
     }).then(function (response) {
       return response.json();
@@ -147,13 +147,25 @@ function ContidioWidget() {
 
   };
 
+  this.escapeHtml = function (text) {
+	  var map = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#039;'
+	  };
+
+	  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+  }
+}
   this.getItemData = function (entity, isDetail) {
 
     var item = {
       uuid: entity.uuid,
-      name: entity.name ? entity.name : entity.uuid,
-      description: entity.description || false,
-      editorial: entity.editorial || false,
+      name: entity.name ? this.escapeHtml(entity.name) : entity.uuid,
+      description: this.escapeHtml(entity.description) || false,
+      editorial: this.escapeHtml(entity.editorial) || false,
       type: this.getType(entity.type),
       url: "https://www.contidio.com/" + this.getType(entity.type) + "/" + entity.uuid
     };
@@ -167,11 +179,17 @@ function ContidioWidget() {
     }
 
     if (entity.resolvedInheritedData && entity.resolvedInheritedData.tags && entity.resolvedInheritedData.tags.tag && entity.resolvedInheritedData.tags.tag.length) {
+	  for (var tag in entity.resolvedInheritedData.tags.tag) {
+		  if (tag.text) {
+			  tag.text = this.escapeHtml(tag.text);
+		  }
+	  }
+			
       item.tags = entity.resolvedInheritedData.tags.tag;
     }
 
     if (entity.previewBinarySet && entity.previewBinarySet[0].author) {
-      item.author = entity.previewBinarySet[0].author;
+      item.author = this.escapeHtml(entity.previewBinarySet[0].author);
     }
 
     var timeStampForDate = entity.lastUpdatedTimestamp || entity.createdTimestamp;
@@ -215,7 +233,7 @@ function ContidioWidget() {
 
               item.html = fetch(htmlSrc, {
                 headers: {
-                  'x-contidio-sdk': '1.0-JS'
+                  'x-contidio-sdk': '1.0-JS-W'
                 }
               }).then(function (response) {
                 return response.text();
