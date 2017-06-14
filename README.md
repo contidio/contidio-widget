@@ -1,6 +1,8 @@
 # contidio-widget
 Include a single or multiple Contidio Assets or Overviews into your existing website. Brought to you by Lukas Struber, Superstar Frontend Developer at Contidio ;).
 
+**current version: 0.0.3**
+
 ## Usage
 
 To use the widget in your website, download the package, host the necessary files and insert this code within your website:
@@ -11,8 +13,8 @@ To use the widget in your website, download the package, host the necessary file
 <!-- END: Contidio widget container -->
 
 <!-- BEGIN: Contidio renderer (customize if needed) -->
-<link href="../renderer/default/styles.css" rel="stylesheet"/>
-<script src="../renderer/default/renderer.js"></script>
+<link href="https://ctdstaticcdn.azureedge.net/widget/renderer/default/styles.0.0.3.css" rel="stylesheet"/>
+<script src="https://ctdstaticcdn.azureedge.net/widget/renderer/default/renderer.0.0.3.js"></script>
 <!-- END: Contidio renderer -->
 
 <!-- BEGIN: Conditio widget snippet -->
@@ -21,11 +23,11 @@ To use the widget in your website, download the package, host the necessary file
         url: <PLACE_CONTIDIO_EMBED_URL_HERE>
     }
 </script>
-<script src="../dist/contidio-widget.js" async defer></script>
+<script src="https://ctdstaticcdn.azureedge.net/widget/contidio-widget.min.0.0.3.js" async defer></script>
 <!-- END: Contidio widget snippet -->
 ```
 
-**NOTE**: The widget is still in early development. Soon there will be a hosted version for the widget and its default renderer.
+**NOTE**: You can also choose to host the widget yourself (i.e. if you made customizations)
 
 ## Development
 
