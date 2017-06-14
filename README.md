@@ -148,7 +148,9 @@ this.resize(item) {...}
 
 **Q: Where do i get the `url` for the widget?**
     
-**A:** We are working on a simple solution. In the meanwhile, look at the network panel of your browser console while on Contidio.
+**A:** As content owner, you will find an _embed_ link on each of your content items. There you will find the widget embed code.
+
+ You can also create the `url` manually based on the following rules:
  
  The schema for asset urls is:
  ```
@@ -157,12 +159,12 @@ this.resize(item) {...}
  
  for folders:
  ```
- https://mdidx.contidio.com/api/v1/folders/<FOLDER_UUID>/childs/anonymous/?flags=145340470544642
+ https://mdidx.contidio.com/api/v1/folders/<FOLDER_UUID>/childs/anonymous/?flags=268435458
  ```
  
  for (asset) search-results:
  ``` 
- https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=145340470544642&startIndex=0&count=20&orderBy=2&orderDirection=2&recursive=1&locale=en&types=1&source=1
+ https://mdidx.contidio.com/api/v1/searchEntities/anonymous/?flags=268435458&startIndex=0&count=20&orderBy=2&orderDirection=2&recursive=1&locale=en&types=1&source=1
  ```
 
 ## How to contribute
