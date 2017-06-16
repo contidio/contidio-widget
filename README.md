@@ -1,7 +1,7 @@
 # contidio-widget
 Include a single or multiple Contidio Assets or Overviews into your existing website. Brought to you by Lukas Struber, Superstar Frontend Developer at Contidio ;).
 
-**current version: 0.0.3**
+**current version: 0.0.4**
 
 ## Usage
 
