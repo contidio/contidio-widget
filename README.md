@@ -1,7 +1,7 @@
 # contidio-widget
 Include a single or multiple Contidio Assets or Overviews into your existing website. Brought to you by Lukas Struber, Superstar Frontend Developer at Contidio ;).
 
-**current version: 0.0.4**
+**current version: 0.0.5**
 
 ## Usage
 
@@ -179,6 +179,13 @@ We decided to run the widget open source on GitHub to reach out to the community
 * Provide examples
 * Translations
 * __Commit your own renderer__
+
+
+## Changelog
+
+**v0.0.5**  
+* Default Renderer list view fix for displaying a single incomplete item row
+* Reworked examples a bit
 
 
 ## License

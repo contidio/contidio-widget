@@ -46,8 +46,9 @@
 
             for(var i = 0; i < items.length; i++){
 
-                items[i].url = (items[i].type == "asset" ? "detail" : "list_advanced" )+".html?cw-uuid="+items[i].uuid+"&cw-type="+items[i].type;
+                items[i].url = (items[i].type == "asset" ? "detail_dynamic" : "list_dynamic" )+".html?cw-uuid="+items[i].uuid+"&cw-type="+items[i].type;
 
+                //Widget item data can be enriched with custom fields
                 if(items[i].isStory){
                     items[i].category = "Trends & Markt";
                     if(!items[i].author){
@@ -56,7 +57,6 @@
                     items[i].authorImage = "https://www.celum.com/cache/image/40x40-bb8b01f48c3d724fdc8416d6781cc7c7-1494836249.jpg";
                 }
 
-
             }
 
         },
@@ -64,10 +64,8 @@
             detailLink: "Ansehen"
         },
         onListClickTarget: "_self",
-        afterRender: function(items){
 
-        },
-        /* example for loading detail view in widget */
+        /* example for loading detail view in the same page */
         /*onListClick: function(item, widget, event){
             if(event){
                 event.preventDefault();

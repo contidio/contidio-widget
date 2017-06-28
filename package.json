@@ -1,6 +1,6 @@
 {
   "name": "contidio-widget",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Include a single or multiple Contidio Assets or Overviews into your existing website",
   "repository": {
     "type": "git",

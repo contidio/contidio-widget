@@ -291,11 +291,15 @@ function ContidioRenderer(widget, $) {
 
     var rowItems = [];
 
+    if($entries.length < itemsPerRow) {
+      this.adjustRow($entries);
+    }
+
     for (var j = 0; j < $entries.length; j++) {
 
       rowItems.push($entries[j]);
 
-      if(rowItems.length === itemsPerRow){
+      if(rowItems.length === itemsPerRow && $entries.length >= itemsPerRow) {
         this.adjustRow(rowItems);
         rowItems = [];
       }
