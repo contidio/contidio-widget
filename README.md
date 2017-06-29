@@ -3,6 +3,8 @@ Include a single or multiple Contidio Assets or Overviews into your existing web
 
 **current version: 0.0.5**
 
+Demo: https://www.contidio.com/widget/example/list_dynamic.html
+
 ## Usage
 
 To use the widget in your website, download the package, host the necessary files and insert this code within your website:
@@ -54,6 +56,7 @@ npm run example
 ```
 
 And go to http://127.0.0.1:8080/example to see a list of all examples
+
 
 ## Widget Options
 
@@ -144,6 +147,17 @@ this.renderLoader() {...}
 ```
 this.resize(item) {...}
 ```
+
+#### Screenshots
+
+| List View | Detail View |
+|:---|:---|
+| <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_default_list.png" width="300"></div> | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_detail.png" width="300"></div> |
+
+| Story | Video |
+|:---|:---|
+| <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_story_detail.png" width="300"></div> | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_video.png" width="300"></div> |
+
 
 
 ## FAQ
