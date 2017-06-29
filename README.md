@@ -13,8 +13,8 @@ To use the widget in your website, download the package, host the necessary file
 <!-- END: Contidio widget container -->
 
 <!-- BEGIN: Contidio renderer (customize if needed) -->
-<link href="https://ctdstaticcdn.azureedge.net/widget/renderer/default/styles.0.0.3.css" rel="stylesheet"/>
-<script src="https://ctdstaticcdn.azureedge.net/widget/renderer/default/renderer.0.0.3.js"></script>
+<link href="https://ctdstaticcdn.azureedge.net/widget/renderer/default/styles.css" rel="stylesheet"/>
+<script src="https://ctdstaticcdn.azureedge.net/widget/renderer/default/renderer.js"></script>
 <!-- END: Contidio renderer -->
 
 <!-- BEGIN: Conditio widget snippet -->
@@ -23,7 +23,7 @@ To use the widget in your website, download the package, host the necessary file
         url: <PLACE_CONTIDIO_EMBED_URL_HERE>
     }
 </script>
-<script src="https://ctdstaticcdn.azureedge.net/widget/contidio-widget.min.0.0.3.js" async defer></script>
+<script src="https://ctdstaticcdn.azureedge.net/widget/contidio-widget.min.js" async defer></script>
 <!-- END: Contidio widget snippet -->
 ```
 
