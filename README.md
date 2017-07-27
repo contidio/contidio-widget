@@ -154,9 +154,9 @@ this.resize(item) {...}
 |:---|:---|
 | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_default_list.png" width="300"></div> | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_detail.png" width="300"></div> |
 
-| Story | Video |
-|:---|:---|
-| <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_story_detail.png" width="300"></div> | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_video.png" width="300"></div> |
+| Video |
+|:---|
+| <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_video.png" width="300"></div> |
 
 
 
