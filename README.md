@@ -195,6 +195,9 @@ We decided to run the widget open source on GitHub to reach out to the community
 
 ## Changelog
 
+**v0.0.6**  
+* `item.date` split into `item.publicationDate` and `item.lastUpdate` to grant more possibilities for renderer
+
 **v0.0.5**  
 * Default Renderer list view fix for displaying a single incomplete item row
 * Reworked examples a bit

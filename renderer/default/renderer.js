@@ -86,8 +86,8 @@ function ContidioRenderer(widget, $) {
       if (item.author && item.isStory) {
         $itemMeta.append("<span class='contidio-item-author-name'>" + item.author + "</span>");
       }
-      if (item.date) {
-        $itemMeta.append("<span class='contidio-item-date'>" + item.date + "</span>");
+      if (item.publicationDate) {
+        $itemMeta.append("<span class='contidio-item-date'>" + item.publicationDate + "</span>");
       }
 
       $itemText.append($itemMeta);
@@ -194,8 +194,8 @@ function ContidioRenderer(widget, $) {
       if (item.author) {
         $assetMetaContainer.append("<span class='contidio-item-author-name'>" + item.author + "</span>");
       }
-      if (item.date) {
-        $assetMetaContainer.append("<span class='contidio-item-date'>" + item.date + "</span>");
+      if (item.publicationDate) {
+        $assetMetaContainer.append("<span class='contidio-item-date'>" + item.publicationDate + "</span>");
       }
       if (item.category) {
         $assetMetaContainer.append("<div class='contidio-item-category'>" + item.category + "</div>");

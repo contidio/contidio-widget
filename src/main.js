@@ -158,10 +158,10 @@ function ContidioWidget() {
 
 	  if (text)
 		return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-	
+
 	  return text;
-  }
-  
+  };
+
   this.getItemData = function (entity, isDetail) {
 
     var item = {
@@ -187,7 +187,7 @@ function ContidioWidget() {
 			  tag.text = this.escapeHtml(tag.text);
 		  }
 	  }
-			
+
       item.tags = entity.resolvedInheritedData.tags.tag;
     }
 
@@ -195,11 +195,18 @@ function ContidioWidget() {
       item.author = this.escapeHtml(entity.previewBinarySet[0].author);
     }
 
-    var timeStampForDate = entity.lastUpdatedTimestamp || entity.createdTimestamp;
+    var timeStampForLastUpdate = entity.lastUpdatedTimestamp || entity.publicationTimestamp;
+    var timeStampForPublicationDate = entity.publicationTimestamp;
 
-    var date = new Date(timeStampForDate);
+    var publicationDate = new Date(timeStampForPublicationDate);
+    var lastUpdate = new Date(timeStampForLastUpdate);
 
-    item.date = (date.getDate() < 10 ? "0" : 0) + date.getDate() + "." + (date.getMonth() < 9 ? "0" : 0) + (date.getMonth() + 1) + "." + date.getFullYear();
+    var dateToString = function(date){
+      return (date.getDate() < 10 ? "0" : 0) + date.getDate() + "." + (date.getMonth() < 9 ? "0" : 0) + (date.getMonth() + 1) + "." + date.getFullYear()
+    };
+
+    item.publicationDate = dateToString(publicationDate);
+    item.lastUpdate = dateToString(lastUpdate);
 
     var width = isDetail ? 875 : 350;
     var previewBinaryPurpose = this.CONSTANTS.BinaryPurpose.ASSET_LIST_PREVIEW;
