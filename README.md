@@ -195,6 +195,11 @@ We decided to run the widget open source on GitHub to reach out to the community
 
 ## Changelog
 
+**v0.0.7**  
+* Fixed rendering of date display in default renderer
+* Default renderer now skips broken entities
+* Example _List Dynamic_ enhanced to show how translations could be handled 
+
 **v0.0.6**  
 * `item.date` split into `item.publicationDate` and `item.lastUpdate` to grant more possibilities for renderer
 

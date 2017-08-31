@@ -74,7 +74,16 @@
             widget.fetchUrl("https://mdidx.contidio.com/api/v1/assets/"+item.uuid+"/anonymous/?flags=145340470544642&locale=en");
         },*/
         url: exampleUrl
+    };
+
+    if(window.location.href.indexOf("/de/") > -1){
+        contidioOptions.url = contidioOptions.url.replace("locale=en","locale=de");
+        contidioOptions.translations.detailLink = "mehr Infos";
+    }else if(window.location.href.indexOf("/en/") > -1){
+        contidioOptions.url = contidioOptions.url.replace("locale=de","locale=en");
+        contidioOptions.translations.detailLink = "more Information";
     }
+
 </script>
 <script src="../dist/contidio-widget.js" async defer></script>
 <!-- END: Contidio widget snippet -->

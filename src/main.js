@@ -196,7 +196,7 @@ function ContidioWidget() {
     }
 
     var timeStampForLastUpdate = entity.lastUpdatedTimestamp || entity.publicationTimestamp;
-    var timeStampForPublicationDate = entity.publicationTimestamp;
+    var timeStampForPublicationDate = entity.publicationTimestamp || false;
 
     var publicationDate = new Date(timeStampForPublicationDate);
     var lastUpdate = new Date(timeStampForLastUpdate);
@@ -205,7 +205,9 @@ function ContidioWidget() {
       return (date.getDate() < 10 ? "0" : 0) + date.getDate() + "." + (date.getMonth() < 9 ? "0" : 0) + (date.getMonth() + 1) + "." + date.getFullYear()
     };
 
-    item.publicationDate = dateToString(publicationDate);
+    if(timeStampForPublicationDate){
+      item.publicationDate = dateToString(publicationDate);
+    }
     item.lastUpdate = dateToString(lastUpdate);
 
     var width = isDetail ? 875 : 350;
@@ -304,7 +306,7 @@ function ContidioWidget() {
       case 2:
         return "asset";
       default:
-        return "undefined";
+        return false;
     }
 
   };

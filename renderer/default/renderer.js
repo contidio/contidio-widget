@@ -32,6 +32,10 @@ function ContidioRenderer(widget, $) {
     for(var i = 0; i < items.length; i++){
       var item = items[i];
 
+      if(!item.type){
+        continue;
+      }
+
       if(item.restricted) {
         item.url = "https://www.contidio.com/"+item.type+"/"+item.uuid;
       }
