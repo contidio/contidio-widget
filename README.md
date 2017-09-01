@@ -1,7 +1,7 @@
 # contidio-widget
 Include a single or multiple Contidio Assets or Overviews into your existing website. Brought to you by Lukas Struber, Superstar Frontend Developer at Contidio ;).
 
-**current version: 0.0.5**
+**current version: 0.0.7**
 
 Demo: https://www.contidio.com/widget/example/list_dynamic.html
 
@@ -153,6 +153,7 @@ this.resize(item) {...}
 | List View | Detail View |
 |:---|:---|
 | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_default_list.png" width="300"></div> | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_detail.png" width="300"></div> |
+
 | Story | Video |
 |:---|:---|
 | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_story_detail.png" width="300"></div> | <div style="text-align:center"><img src="https://www.contidio.com/assets/imgs/screenshots/widget_video.png" width="300"></div> |
