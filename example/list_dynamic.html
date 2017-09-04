@@ -78,10 +78,10 @@
 
     if(window.location.href.indexOf("/de/") > -1){
         contidioOptions.url = contidioOptions.url.replace("locale=en","locale=de");
-        contidioOptions.translations.detailLink = "mehr Infos";
+        contidioOptions.translations = {detailLink : "mehr Infos"};
     }else if(window.location.href.indexOf("/en/") > -1){
         contidioOptions.url = contidioOptions.url.replace("locale=de","locale=en");
-        contidioOptions.translations.detailLink = "more Information";
+        contidioOptions.translations = {detailLink : "more Information"};
     }
 
 </script>
