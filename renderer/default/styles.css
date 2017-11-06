@@ -38,6 +38,10 @@ body {
     color: #081c2d;
 }
 
+.contidio-item:hover {
+    text-decoration: none;
+}
+
 .contidio-item.folder:before,
 .contidio-item.folder:after {
     position: absolute;

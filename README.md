@@ -1,7 +1,7 @@
 # contidio-widget
 Include a single or multiple Contidio Assets or Overviews into your existing website. Brought to you by Lukas Struber, Superstar Frontend Developer at Contidio ;).
 
-**current version: 0.0.7**
+**current version: 0.0.8**
 
 Demo: https://www.contidio.com/widget/example/list_dynamic.html
 
@@ -195,6 +195,10 @@ We decided to run the widget open source on GitHub to reach out to the community
 
 
 ## Changelog
+
+**v0.0.8**  
+* Fixed internal `dateToString` function to properly render dates
+* Style improvements in Default Renderer for more consistent embedding
 
 **v0.0.7**  
 * Fixed rendering of date display in default renderer
